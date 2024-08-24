@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ES6", "dom"],
+    "target": "ES6",
+    "allowJs": true,
+    "sourceMap": true,
+    "noLib": false,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {},
+    "incremental": false,
+    "jsx": "react-jsx"
+  },
+  "exclude": ["node_modules", "webpack", "dist", "front"]
+}
