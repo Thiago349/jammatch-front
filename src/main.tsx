@@ -10,8 +10,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 
 import { Router } from './navigation/router';
-import { ConfigProvider } from 'antd';
-import { colors } from './styles/colors';
 
 const queryClient = new QueryClient({
   defaultOptions: {

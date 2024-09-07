@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch, authorize } from "src/redux/store";
+
+import { Card, Flex } from "antd";
+import { CustomButton, LogoLight, Input } from "src/components";
+
+import { postAuth, getToken } from "src/services/api/endpoints";
 import { colors } from "src/styles/colors";
 import { languages } from "src/resources/languages";
-import { CustomButton, LogoLight, Input } from "src/components";
-import { Card, Flex, Button } from "antd";
-import { useAppDispatch, useAppSelector, authorize } from "src/redux/store";
 
 type LoginCardProps = {
 	height: string,
@@ -16,14 +20,22 @@ export const LoginCard = ({height, maxHeight, width}: LoginCardProps ) => {
 	const language = useAppSelector(state => state.language.name)
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
-	
 	const[username, setUsername] = useState<string | null>(null)
 	const[password, setPassword] = useState<string | null>(null)
 
-	function login() {
-		dispatch(authorize({email: username}))
-		if (true) navigate('/menu')	
-	}
+	const onSuccess = (data) => {
+		dispatch(authorize(data))
+		navigate('/home', { replace: true })
+	};
+
+	const { mutateAsync: authenticate } = useMutation({
+		mutationFn: postAuth,
+		onSuccess: onSuccess
+	});
+
+	const login = async () => {
+		authenticate({'username': username, 'password': password})
+	};
 
 	return (
 		<Card 
@@ -49,7 +61,7 @@ export const LoginCard = ({height, maxHeight, width}: LoginCardProps ) => {
 				}}>
 				<Input
 					width="100%"
-					title={languages[language].emailInput}
+					title={languages[language].usernameInput}
 					color={colors.brand.light}
 					onChange={setUsername}
 				/>
@@ -60,7 +72,7 @@ export const LoginCard = ({height, maxHeight, width}: LoginCardProps ) => {
 					password={true}
 					onChange={setPassword}
 				/>
-				<CustomButton 
+				<CustomButton
 					onClick={login}
 					style={{ 
 						width: "100%",

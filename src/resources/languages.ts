@@ -2,7 +2,7 @@ export const languages = {
     portuguese: {
         confirmBtn: "Confirmar",
         siderProfileBtn: "Perfil",
-        emailInput: "Email",
+        usernameInput: "Usuário",
         passwordInput: "Senha",
     }
 }

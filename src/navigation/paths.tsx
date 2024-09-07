@@ -1,5 +1,3 @@
-import { lazy, LazyExoticComponent } from "react";
-
 import { Login, Home, Profile } from "src/pages";
 
 export type PathProps = {

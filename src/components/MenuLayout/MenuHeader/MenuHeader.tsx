@@ -1,8 +1,9 @@
-import { useAppSelector } from "src/redux/store";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch, unauthorize  } from "src/redux/store";
 
-import { Layout, Flex, Button } from 'antd';
+import { Layout, Flex } from 'antd';
 import { LogoLightHorizontal, CustomButton } from 'src/components';
+import { LogoutOutlined } from '@ant-design/icons'
 
 import { colors } from 'src/styles/colors';
 import { languages } from 'src/resources/languages';
@@ -11,7 +12,13 @@ const { Header } = Layout;
 
 export const MenuHeader = () => {
 	const language = useAppSelector(state => state.language.name)
+	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
+
+	const handleLogout = () => {
+		dispatch(unauthorize())
+		navigate('/login', { replace: true })
+	};
 
 	const headerStyle: React.CSSProperties = {
 		width: '100vw',
@@ -30,9 +37,23 @@ export const MenuHeader = () => {
 						padding: 0, 
 						border: 0 
 					}}
-					onClick={() => navigate('/menu')}
+					onClick={() => navigate('/home')}
 					>
 					<LogoLightHorizontal height="100%" margin='0px 0px 0px 10px'/>
+				</CustomButton>
+				<CustomButton 
+					style={{
+						display: 'flex',
+						justifyContent: 'start',
+						padding: 0
+					}}
+					onClick={handleLogout}
+					>
+					<LogoutOutlined style={{
+							color: 'red',
+							margin: '0px 10px',
+							fontSize: '24px',
+						}}/>
 				</CustomButton>
 			</Flex>
 		</Header>

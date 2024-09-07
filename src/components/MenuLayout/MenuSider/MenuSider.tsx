@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppSelector, useAppDispatch, changeExpanded } from "src/redux/store";
+import { useAppSelector, useAppDispatch, expand, retract } from "src/redux/store";
 
 import { Button, Flex, Layout } from 'antd';
 import SideButton from './SideButton';
@@ -37,7 +37,7 @@ export const MenuSider = () => {
 				<Button
 					type="text"
 					icon={siderExpanded ? <MenuFoldOutlined style={{ color: colors.brand.light }}/> : <MenuUnfoldOutlined style={{ color: colors.brand.light }}/>}
-					onClick={() => dispatch(changeExpanded())}
+					onClick={() => dispatch( siderExpanded ? retract() : expand())}
 					style={{
 						width: '16px',
 						border: '0px',

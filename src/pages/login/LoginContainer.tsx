@@ -18,6 +18,7 @@ export const Login = () => {
     background: "linear-gradient(90deg, rgba(50,0,71,1) 0%, rgba(11,17,26,1) 75%)"
   };
 
+
   return (
     <Layout style={layoutStyle}>
       <Content style={contentStyle}>

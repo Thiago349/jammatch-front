@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import { CustomButton } from "src/components"
 
@@ -17,7 +17,7 @@ export const SideButton = ({ label, icon, siderExpanded, route }: SideButtonProp
 	const navigate = useNavigate()
 	return (
 		<CustomButton
-			onClick={() => navigate(route)}
+			onClick={() => navigate(route, { replace: true })}
 			style={{
 				display: 'flex',
 				justifyContent: 'start',

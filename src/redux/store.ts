@@ -17,32 +17,32 @@ const LanguageSlice = createSlice({
     initialState: languageInitialState,
     reducers: {
         changeLanguage: (state, action: PayloadAction<{ name: string }>) => {
-            state.name = action.payload.name
+            return { name: action.payload.name }
         }
     }
 })
 
 interface AuthenticationState {
     status: boolean
-    email: string | null
+    token: string | null, 
+    refreshToken: string | null
 }
 
 const authenticationInitialState: AuthenticationState = {
     status: false,
-    email: null
+    token: null,
+    refreshToken: null
 }
 
 const AuthenticationSlice = createSlice({
     name: "authentication",
     initialState: authenticationInitialState,
     reducers: {
-        authorize: (state, action: PayloadAction<{ email: string }>) => {
-            state.email = action.payload.email
-            state.status = true
+        authorize: (state, action: PayloadAction<{ token: string, refreshToken: string }>) => {
+            return { status: true, token: action.payload.token, refreshToken: action.payload.refreshToken }
         },
         unauthorize: (state) => {
-            state.email = null
-            state.status = false
+            return { status: false, token: null, refreshToken: null }
         }
     }
 })
@@ -59,8 +59,11 @@ const SiderSlice = createSlice({
     name: "sider",
     initialState: siderInitialState,
     reducers: {
-        changeExpanded: (state, action: PayloadAction<{ email: string }>) => {
-            state.expanded = !state.expanded
+        expand: (state) => {
+            return { expanded: true }
+        },
+        retract: (state) => {
+            return { expanded: false }
         }
     }
 })
@@ -89,4 +92,4 @@ export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getSta
 
 export const { authorize, unauthorize } = AuthenticationSlice.actions
 export const { changeLanguage } = LanguageSlice.actions
-export const { changeExpanded } = SiderSlice.actions
+export const { expand, retract } = SiderSlice.actions

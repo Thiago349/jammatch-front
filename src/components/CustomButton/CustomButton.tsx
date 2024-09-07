@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Button, ConfigProvider } from 'antd';
 import { colors } from 'src/styles/colors';
 
