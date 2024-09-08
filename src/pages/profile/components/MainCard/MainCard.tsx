@@ -1,28 +1,26 @@
-import { colors } from "src/styles/colors";
-import { languages } from "src/resources/languages";
-import { Card, Flex, Button, Typography } from "antd";
+import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "src/redux/store";
+import { getUserSelf } from "src/services/api/endpoints";
+
+import { Card, Flex, Button, Typography } from "antd";
+import { Skeleton } from "@mui/material";
+
+import { languages } from "src/resources/languages";
+import { colors } from "src/styles/colors";
 const { Title } = Typography
 
 type MainCardProps = {
-	height: string,
 	width: string
 }
 
-export const MainCard = ({height, width}: MainCardProps ) => {
+export const MainCard = ({width}: MainCardProps ) => {
 	const language = useAppSelector(state => state.language.name)
-	const userData = {
-		"name": "Thiago Prezotte Reis",
-		"role": ["DRUMMER"],
-		"birthDate": "27/03/2002",
-		"description": 
-		<p>
-			Thiago é um baterista que toca na cena de BH desde <b>2017</b>.<br/><br/>
-			Em suas bandas ou como músico de apoio, se apresentou em casas como Major Lock, Layback, Distrital, Nightmarket, Trattoria 158, Mina Jazz Bar e muitas outras!<br/><br/>
-			Com a banda <b>Freak!</b>, produziu 5 edições de sucesso do evento <b>Rock Session</b>.
-		</p>
-	}
 
+	const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
+		queryKey: ['getUserSelf'],
+		queryFn: getUserSelf,
+	  })
+	
 	return (
 		<Card 
 			styles={{
@@ -42,13 +40,26 @@ export const MainCard = ({height, width}: MainCardProps ) => {
 		>
 			<Card.Meta
 				title={
-					<Title 
-						level={3}
-					>
-						{userData.name}
+					isLoadingUserSelf ?
+					<Skeleton variant="rounded" height={32} width="30%" style={{ margin: '16px 0px'}} /> :
+					<Title level={3} style={{
+						margin: '16px 0px',
+					}}>
+						{userSelf?.name}
 					</Title>
 				}
 				avatar={
+					isLoadingUserSelf ?
+					<Skeleton 
+						variant="circular" 
+						height={160}
+						style={{
+							borderRadius: '50%',
+							width: '160px',
+							position: 'relative',
+							top: '-104px',
+							border: `${colors.brand.light} 3px solid`
+					}} /> :
 					<img 
 						style={{
 							borderRadius: '50%',
@@ -61,13 +72,30 @@ export const MainCard = ({height, width}: MainCardProps ) => {
 					/>
 				}
 				description={
+					isLoadingUserSelf ?
+					<>
+						{
+							[1, 2, 3].map(key => <Skeleton
+								key={key} 
+								variant="rounded" 
+								height={18} 
+								width="100%" 
+								style={{
+									margin: '16px 0px',
+							}}/>)
+						}
+					</> :
 					<Title 
 						level={5}
 						style={{
+							margin: '16px 0px',
 							fontWeight: 'normal'
 						}}
 					>
-						{userData.description}
+						<div 
+							style={{ fontWeight: 'normal', margin: '0px '}}
+							dangerouslySetInnerHTML={{ __html: userSelf?.description }}
+						/>
 					</Title>
 				}
 			/>

@@ -11,7 +11,7 @@ export const ProfileView = ({
 
   return (
     <Flex justify="center" style={{ padding: '24px', width: '100%', height: 'fit-content', gap: '24px'  }}>
-      <MainCard width="100%" height="100%"/>
+      <MainCard width="100%" />
     </ Flex>
   )
 }
