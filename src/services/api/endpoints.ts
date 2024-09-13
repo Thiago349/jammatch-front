@@ -6,16 +6,30 @@ export const getToken = () => {
   return reduxState.authentication.token;
 };
 
-export const postAuth = async (credentials) => {  
-  const { data } = await api.post("v1/auth/", credentials);
+
+export const postAuth = async (payload) => {  
+  const { data } = await api.post(`v1/auth/`, payload);
 
   return data;
 };
 
+
 export const getUserSelf = async () => {
   const token = getToken()
 
-  const { data } = await api.get("v1/users/self", {
+  const { data } = await api.get(`v1/users/self`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return data;
+};
+
+
+export const putProfile = async (payload: { formData: FormData, profileId: string}) => {  
+  const token = getToken()
+
+  const { data } = await api.put(`v1/profiles/${payload.profileId}/photo`, 
+    payload.formData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

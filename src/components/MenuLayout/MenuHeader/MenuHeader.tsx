@@ -18,6 +18,7 @@ export const MenuHeader = () => {
 	const handleLogout = () => {
 		dispatch(unauthorize())
 		navigate('/login', { replace: true })
+		window.location.reload()
 	};
 
 	const headerStyle: React.CSSProperties = {
@@ -37,7 +38,7 @@ export const MenuHeader = () => {
 						padding: 0, 
 						border: 0 
 					}}
-					onClick={() => navigate('/home')}
+						onClick={() => navigate('/home')}
 					>
 					<LogoLightHorizontal height="100%" margin='0px 0px 0px 10px'/>
 				</CustomButton>

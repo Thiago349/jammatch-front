@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "src/redux/store";
 import { getUserSelf } from "src/services/api/endpoints";
 
 import { Card, Flex, Button, Typography } from "antd";
+import { CustomButton } from "src/components";
+import { EditOutlined } from '@ant-design/icons'
 import { Skeleton } from "@mui/material";
+import { EditProfileModal } from "../../modal";
 
 import { languages } from "src/resources/languages";
 import { colors } from "src/styles/colors";
@@ -15,6 +19,7 @@ type MainCardProps = {
 
 export const MainCard = ({width}: MainCardProps ) => {
 	const language = useAppSelector(state => state.language.name)
+	const [editModalStatus, setEditModalStatus] = useState<boolean>(false)
 
 	const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
 		queryKey: ['getUserSelf'],
@@ -40,13 +45,33 @@ export const MainCard = ({width}: MainCardProps ) => {
 		>
 			<Card.Meta
 				title={
-					isLoadingUserSelf ?
-					<Skeleton variant="rounded" height={32} width="30%" style={{ margin: '16px 0px'}} /> :
-					<Title level={3} style={{
-						margin: '16px 0px',
-					}}>
-						{userSelf?.name}
-					</Title>
+					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>
+						{
+							isLoadingUserSelf ?
+							<Skeleton variant="rounded" height={32} width="30%" style={{ margin: '16px 0px'}} /> :
+							<Title level={3} style={{
+								margin: '16px 0px',
+							}}>
+								{userSelf?.profile?.name}
+							</Title>
+						}
+						<CustomButton
+							style={{ 
+								height: '32px',
+								width: '32px',
+								marginRight: '16px',
+								padding: 0
+							}}
+							onClick={setEditModalStatus}
+							disabled={isLoadingUserSelf}
+							>
+							<EditOutlined style={{
+								color: colors.brand.dark,
+								margin: '0px 10px',
+								fontSize: '24px',
+							}}/>
+						</CustomButton>
+					</div>
 				}
 				avatar={
 					isLoadingUserSelf ?
@@ -94,11 +119,16 @@ export const MainCard = ({width}: MainCardProps ) => {
 					>
 						<div 
 							style={{ fontWeight: 'normal', margin: '0px '}}
-							dangerouslySetInnerHTML={{ __html: userSelf?.description }}
+							dangerouslySetInnerHTML={{ __html: userSelf?.profile?.description }}
 						/>
 					</Title>
 				}
 			/>
+		<EditProfileModal 
+			setModalStatus={setEditModalStatus}
+			modalStatus={editModalStatus}
+			profileId={userSelf?.profile?.id}
+		/>
 		</Card>
 	)
 };
