@@ -50,11 +50,13 @@ export const MenuHeader = () => {
 					}}
 					onClick={handleLogout}
 					>
-					<LogoutOutlined style={{
+					<LogoutOutlined 
+						style={{
 							color: 'red',
 							margin: '0px 10px',
 							fontSize: '24px',
-						}}/>
+						}}
+					/>
 				</CustomButton>
 			</Flex>
 		</Header>

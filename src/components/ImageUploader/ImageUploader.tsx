@@ -6,13 +6,15 @@ import { RcFile } from 'antd/es/upload';
 
 type ImageUploaderProps = {
   setSelectedFile: Dispatch<SetStateAction<RcFile>>
+  setFileList: Dispatch<SetStateAction<Array<any>>>
+  fileList: Array<any>
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
-    setSelectedFile
+    setSelectedFile,
+    setFileList,
+    fileList
 }) => {
-    const [fileList, setFileList] = useState<Array<any>>([]);
-
     return (
       <ImgCrop rotationSlider>
         <Upload

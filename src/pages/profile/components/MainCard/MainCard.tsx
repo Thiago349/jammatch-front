@@ -5,7 +5,7 @@ import { getUserSelf } from "src/services/api/endpoints";
 
 import { Card, Flex, Button, Typography } from "antd";
 import { CustomButton } from "src/components";
-import { EditOutlined } from '@ant-design/icons'
+import { EditOutlined, UserOutlined } from '@ant-design/icons'
 import { Skeleton } from "@mui/material";
 import { EditProfileModal } from "../../modal";
 
@@ -85,16 +85,43 @@ export const MainCard = ({width}: MainCardProps ) => {
 							top: '-104px',
 							border: `${colors.brand.light} 3px solid`
 					}} /> :
-					<img 
-						style={{
-							borderRadius: '50%',
-							width: '160px',
-							position: 'relative',
-							top: '-104px',
-							border: `${colors.brand.light} 3px solid`
-						}} 
-						src="src/styles/profile-pic.png" 
-					/>
+					(
+						userSelf?.profile?.hasPhoto ?
+						<img 
+							style={{
+								borderRadius: '50%',
+								width: '160px',
+								height: '160px',
+								position: 'relative',
+								top: '-104px',
+								border: `${colors.brand.light} 3px solid`
+							}} 
+							src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo`} 
+						/> :
+						<div
+							style={{
+								borderRadius: '50%',
+								width: '160px',
+								height: '160px',
+								position: 'relative',
+								top: '-104px',
+								border: `${colors.brand.light} 3px solid`,
+								backgroundColor: colors.primaryNeutral[200],
+								overflow: 'hidden',
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center'
+							}}
+						>
+							<UserOutlined 
+								style={{
+									color: colors.brand.dark,
+									fontSize: '140px',
+									overflow: 'hidden'
+								}}
+							/>
+						</div>
+					)
 				}
 				description={
 					isLoadingUserSelf ?

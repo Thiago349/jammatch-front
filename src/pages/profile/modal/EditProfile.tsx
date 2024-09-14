@@ -33,15 +33,20 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     const onFinish: FormProps['onFinish'] = () => {
         const formData = new FormData()
         formData.append('profileImage', profileImage)
-        formData.append('profileId', profileId)
+        formData.append('imageType', 'photo')
         mutateAsync({ formData, profileId })
         setModalStatus(false)
+        setProfileImage(null)
+        setFileList([])
     };
     
     const [profileImage, setProfileImage] = useState<RcFile>(null);
+    const [fileList, setFileList] = useState<Array<any>>([]);
 
     const onCancel = () => {
         setModalStatus(false)
+        setProfileImage(null)
+        setFileList([])
     }
 
     return (
@@ -53,7 +58,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             <Form onFinish={onFinish}>
                 <Flex vertical justify='center' align='center'>
                     <Form.Item name='profileImage' valuePropName="profileImage">
-                        <ImageUploader setSelectedFile={setProfileImage}/>
+                        <ImageUploader 
+                            setSelectedFile={setProfileImage}
+                            setFileList={setFileList}
+                            fileList={fileList}
+                        />
                     </Form.Item>
                     <Form.Item>
                         <CustomButton

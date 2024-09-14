@@ -1,4 +1,3 @@
-import { colors } from "src/styles/colors";
 import { MainCard } from "./components";
 import { Flex } from "antd";
 
