@@ -8,7 +8,7 @@ export const getToken = () => {
 
 
 export const postAuth = async (payload) => {  
-  const { data } = await api.post(`v1/auth/`, payload);
+  const { data } = await api.post(`v1/auth`, payload);
 
   return data;
 };
