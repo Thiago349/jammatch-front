@@ -9,7 +9,6 @@ import { ImageUploader } from "src/components";
 import { CustomButton } from "src/components";
 import { EditOutlined, UserOutlined } from '@ant-design/icons'
 import { Skeleton } from "@mui/material";
-import { EditProfileModal } from "../../modal";
 
 import { languages } from "src/resources/languages";
 import { colors } from "src/styles/colors";
@@ -21,7 +20,6 @@ type MainCardProps = {
 
 export const MainCard = ({width}: MainCardProps ) => {
 	const language = useAppSelector(state => state.language.name)
-	const [editModalStatus, setEditModalStatus] = useState<boolean>(false)
 
 	const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
 		queryKey: ['getUserSelf'],
@@ -96,7 +94,6 @@ export const MainCard = ({width}: MainCardProps ) => {
 								marginRight: '16px',
 								padding: 0
 							}}
-							onClick={setEditModalStatus}
 							disabled={isLoadingUserSelf}
 							>
 							<EditOutlined style={{
@@ -192,11 +189,6 @@ export const MainCard = ({width}: MainCardProps ) => {
 					</Title>
 				}
 			/>
-		<EditProfileModal 
-			setModalStatus={setEditModalStatus}
-			modalStatus={editModalStatus}
-			profileId={userSelf?.profile?.id}
-		/>
 		</Card>
 	)
 };
