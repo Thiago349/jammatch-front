@@ -1,10 +1,12 @@
-import { Layout } from "antd"
 import { useAppSelector } from "src/redux/store";
 
-import { MenuHeader, MenuSider } from '.';
-const { Content } = Layout;
+import { Layout } from "antd"
 
 import { colors } from 'src/styles/colors';
+
+import { MenuHeader, MenuSider } from '.';
+
+const { Content } = Layout;
 
 type MenuLayoutProps = {
 	children?: JSX.Element | string,

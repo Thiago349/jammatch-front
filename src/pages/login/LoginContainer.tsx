@@ -1,5 +1,6 @@
-import { LoginView } from './LoginView'
 import { Layout } from "antd"
+import { LoginView } from './LoginView'
+
 const { Content } = Layout;
 
 export const Login = () => {

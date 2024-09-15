@@ -1,6 +1,4 @@
-import { colors } from "src/styles/colors";
 import { LoginCard } from "./components"
-
 
 export type TLoginView = {
 }

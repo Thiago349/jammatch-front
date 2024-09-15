@@ -8,7 +8,6 @@ import "@fontsource-variable/inter";
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-
 import { Router } from './navigation/router';
 
 const queryClient = new QueryClient({

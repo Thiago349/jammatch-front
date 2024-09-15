@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useAppSelector, useAppDispatch, expand, retract } from "src/redux/store";
 
 import { Button, Flex, Layout } from 'antd';
-import SideButton from './SideButton';
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
+
+import SideButton from './SideButton';
 
 import { colors } from 'src/styles/colors';
 import { languages } from 'src/resources/languages';
+
 const { Sider } = Layout;
 
 export const MenuSider = () => {

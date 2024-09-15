@@ -1,32 +1,32 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useAppSelector } from "src/redux/store";
-import { getUserSelf } from "src/services/api/endpoints";
 
-import { Card, Flex, Typography } from "antd";
-import { ImageUploader } from "src/components";
-
-import { CustomButton } from "src/components";
-import { EditOutlined, UserOutlined } from '@ant-design/icons'
 import { Skeleton } from "@mui/material";
+import { Card, Flex, Typography } from "antd";
+import { EditOutlined, UserOutlined } from '@ant-design/icons'
+import { ImageUploader, CustomButton } from "src/components";
 
 import { colors } from "src/styles/colors";
+
 const { Title } = Typography
 
 type MainCardProps = {
-	width: string
+	width: string,
+	setEditProfileModal?: Dispatch<SetStateAction<boolean>>,
+	userSelf: any,
+	isLoadingUserSelf: boolean
 }
 
-export const MainCard = ({width}: MainCardProps ) => {
+export const MainCard = ({
+	width, 
+	setEditProfileModal, 
+	userSelf, 
+	isLoadingUserSelf
+}: MainCardProps ) => {
 	const language = useAppSelector(state => state.language.name)
 	const [photoKey, setPhotoKey] = useState<number>(Date.now())
 	const [bannerKey, setBannerKey] = useState<number>(Date.now())
-	
-	const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
-		queryKey: ['getUserSelf'],
-		queryFn: getUserSelf,
-	  })
-	
+		
 	return (
 		<Card 
 			styles={{
@@ -122,6 +122,7 @@ export const MainCard = ({width}: MainCardProps ) => {
 								padding: 0
 							}}
 							disabled={isLoadingUserSelf}
+							onClick={setEditProfileModal}
 							>
 							<EditOutlined style={{
 								color: colors.brand.dark,

@@ -1,5 +1,6 @@
-import api from "./instance";
 import { store } from "src/redux/store";
+
+import api from "./instance";
 
 export const getToken = () => {
   const reduxState = store.getState()

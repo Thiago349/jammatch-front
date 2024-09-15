@@ -1,7 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
+
 import { Input, Flex, Typography } from 'antd';
 import { EyeInvisibleFilled, EyeFilled } from '@ant-design/icons';
+
 import { colors } from 'src/styles/colors';
+
 const { Title } = Typography
 
 type MainInputProps = {

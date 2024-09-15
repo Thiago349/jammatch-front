@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { useAppSelector, useAppDispatch, authorize } from "src/redux/store";
 
 import { Card, Flex } from "antd";
 import { CustomButton, LogoLight, Input } from "src/components";
 
-import { postAuth, getToken } from "src/services/api/endpoints";
+import { postAuth } from "src/services/api/endpoints";
 import { colors } from "src/styles/colors";
 import { languages } from "src/resources/languages";
 
