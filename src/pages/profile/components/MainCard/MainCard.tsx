@@ -10,7 +10,6 @@ import { CustomButton } from "src/components";
 import { EditOutlined, UserOutlined } from '@ant-design/icons'
 import { Skeleton } from "@mui/material";
 
-import { languages } from "src/resources/languages";
 import { colors } from "src/styles/colors";
 const { Title } = Typography
 
@@ -20,7 +19,9 @@ type MainCardProps = {
 
 export const MainCard = ({width}: MainCardProps ) => {
 	const language = useAppSelector(state => state.language.name)
-
+	const [photoKey, setPhotoKey] = useState<number>(Date.now())
+	const [bannerKey, setBannerKey] = useState<number>(Date.now())
+	
 	const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
 		queryKey: ['getUserSelf'],
 		queryFn: getUserSelf,
@@ -51,22 +52,56 @@ export const MainCard = ({width}: MainCardProps ) => {
     						height: '0'  
 						}}
 					/> :
-					(
-						userSelf?.profile?.hasBanner ?
-						<img 
-							src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-banner`} 
-						/> :
-						<div
-							style={{
-								width: '100%',
-								paddingTop: 'calc( 28.37% )',
-								height: '0',
-								background: `linear-gradient(90deg, ${colors.brand.dark} 0%, ${colors.brand.jamPurple} 100%)`,
-							}}
-						/>
-					) 
+					userSelf?.profile?.hasBanner ?
+					<img 
+						src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-banner?key=${bannerKey}`} 
+					/>
+						:
+					<div
+						style={{
+							width: '100%',
+							paddingTop: 'calc( 28.37% )',
+							height: '0',
+							background: `linear-gradient(90deg, ${colors.brand.dark} 0%, ${colors.brand.jamPurple} 100%)`,
+						}}
+					/>
 				}
 		>
+			<div
+				style={{
+					position: 'absolute',
+					top: '16px',
+					right: '40px',
+					borderRadius: '25%'
+				}}
+			>
+				<ImageUploader
+					aspect={ 1128 / 320 }
+					profileId={userSelf?.profile?.id}
+					imageType="banner"
+					onChange={setBannerKey}
+				>
+					<CustomButton
+						defaultBgColor={colors.brand.light}
+						defaultColor={colors.brand.dark}
+						hoverBgColor={colors.brand.jamPurple}
+						hoverColor={colors.brand.light}
+						style={{
+							padding: '0px',
+							border: '0px',
+							width: '26px',
+							height: '26px'
+						}}
+					>
+						<EditOutlined 
+							style={{
+								fontSize: '16px',
+								overflow: 'hidden'
+							}}
+						/>
+					</CustomButton>
+				</ImageUploader>
+			</div>
 			<Card.Meta
 				title={
 					<Flex justify='space-between' align='center'>
@@ -90,8 +125,7 @@ export const MainCard = ({width}: MainCardProps ) => {
 							>
 							<EditOutlined style={{
 								color: colors.brand.dark,
-								margin: '0px 10px',
-								fontSize: '24px',
+								fontSize: '20px',
 							}}/>
 						</CustomButton>
 					</Flex>
@@ -124,6 +158,7 @@ export const MainCard = ({width}: MainCardProps ) => {
 							aspect={ 1 }
 							profileId={userSelf?.profile?.id}
 							imageType="photo"
+							onChange={setPhotoKey}
 						>
 							{
 								userSelf?.profile?.hasPhoto ?
@@ -132,13 +167,13 @@ export const MainCard = ({width}: MainCardProps ) => {
 										width: '160px',
 										height: '160px'
 									}} 
-									src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo`} 
+									src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo?key=${photoKey}`} 
 								/> :
 								<Flex
 									justify="center"
 									align="center"
 									style={{
-										overflow: 'hidden',
+										overflow: 'hidden'
 									}}
 								>
 									<UserOutlined 

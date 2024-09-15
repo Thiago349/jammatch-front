@@ -1,9 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { useMutation } from '@tanstack/react-query'
+import { Dispatch, SetStateAction } from 'react'
+import { useMutation, useQueryClient  } from '@tanstack/react-query'
 
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import { RcFile } from 'antd/es/upload';
 
 import { putProfile } from 'src/services/api/endpoints';
 
@@ -12,21 +11,30 @@ type ImageUploaderProps = {
   profileId: string
   imageType: string
   children?: JSX.Element | string,
+  onChange?: Dispatch<SetStateAction<number>>
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
     aspect,
     profileId,
     imageType,
-    children
+    children,
+    onChange
 }) => {
+    const queryClient = useQueryClient();
+    
     const { mutate, isPending } = useMutation({
-      mutationFn: putProfile
+      mutationFn: putProfile,
+      onSuccess: () => {
+        onChange(Date.now())
+        queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
+      }
     })
     
     return (
       <ImgCrop aspect={aspect}>
         <Upload
+          showUploadList={false}
           beforeUpload={(file) => {
             const formData = new FormData()
             formData.append('profileImage', file)

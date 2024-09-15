@@ -1,4 +1,3 @@
-export { default as Input } from "./Input/MainInput";
 export { default as LogoDark } from "./Logo/LogoDark";
 export { default as LogoLight } from "./Logo/LogoLight";
 export { default as LogoDarkHorizontal } from "./Logo/LogoDarkHorizontal";
