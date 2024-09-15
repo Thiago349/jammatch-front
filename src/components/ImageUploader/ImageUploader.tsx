@@ -10,12 +10,14 @@ import { putProfile } from 'src/services/api/endpoints';
 type ImageUploaderProps = {
   aspect: number
   profileId: string
+  imageType: string
   children?: JSX.Element | string,
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
     aspect,
     profileId,
+    imageType,
     children
 }) => {
     const { mutate, isPending } = useMutation({
@@ -28,7 +30,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           beforeUpload={(file) => {
             const formData = new FormData()
             formData.append('profileImage', file)
-            formData.append('imageType', 'photo')
+            formData.append('imageType', imageType)
             mutate({ formData, profileId })
             return false 
           }}

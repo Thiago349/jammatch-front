@@ -54,20 +54,12 @@ export const MainCard = ({width}: MainCardProps ) => {
 					(
 						userSelf?.profile?.hasBanner ?
 						<img 
-							style={{
-								borderRadius: '50%',
-								width: '160px',
-								height: '160px',
-								position: 'relative',
-								top: '-104px',
-								border: `${colors.brand.light} 3px solid`
-							}} 
 							src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-banner`} 
 						/> :
 						<div
 							style={{
 								width: '100%',
-								paddingTop: '28.37%',
+								paddingTop: 'calc( 28.37% )',
 								height: '0',
 								background: `linear-gradient(90deg, ${colors.brand.dark} 0%, ${colors.brand.jamPurple} 100%)`,
 							}}
@@ -129,8 +121,9 @@ export const MainCard = ({width}: MainCardProps ) => {
 						}}
 					>
 						<ImageUploader
-							aspect={1/1}
+							aspect={ 1 }
 							profileId={userSelf?.profile?.id}
+							imageType="photo"
 						>
 							{
 								userSelf?.profile?.hasPhoto ?
@@ -159,7 +152,7 @@ export const MainCard = ({width}: MainCardProps ) => {
 								</Flex>
 							}
 						</ImageUploader>
-				</div>
+					</div>
 				}
 				description={
 					isLoadingUserSelf ?
