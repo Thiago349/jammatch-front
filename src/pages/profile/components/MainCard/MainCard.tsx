@@ -3,7 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "src/redux/store";
 import { getUserSelf } from "src/services/api/endpoints";
 
-import { Card, Flex, Button, Typography } from "antd";
+import { Card, Flex, Typography } from "antd";
+import { ImageUploader } from "src/components";
+
 import { CustomButton } from "src/components";
 import { EditOutlined, UserOutlined } from '@ant-design/icons'
 import { Skeleton } from "@mui/material";
@@ -41,11 +43,43 @@ export const MainCard = ({width}: MainCardProps ) => {
 				cursor: 'default',
 			}}
 			bordered={false}
-			cover={ <img src="src/styles/banner.png" /> }
+			cover={ 
+				isLoadingUserSelf ?
+					<Skeleton
+						variant="rectangular"
+						style={{
+							width: '100%',
+    						paddingTop: '28.37%',
+    						height: '0'  
+						}}
+					/> :
+					(
+						userSelf?.profile?.hasBanner ?
+						<img 
+							style={{
+								borderRadius: '50%',
+								width: '160px',
+								height: '160px',
+								position: 'relative',
+								top: '-104px',
+								border: `${colors.brand.light} 3px solid`
+							}} 
+							src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-banner`} 
+						/> :
+						<div
+							style={{
+								width: '100%',
+								paddingTop: '28.37%',
+								height: '0',
+								background: `linear-gradient(90deg, ${colors.brand.dark} 0%, ${colors.brand.jamPurple} 100%)`,
+							}}
+						/>
+					) 
+				}
 		>
 			<Card.Meta
 				title={
-					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>
+					<Flex justify='space-between' align='center'>
 						{
 							isLoadingUserSelf ?
 							<Skeleton variant="rounded" height={32} width="30%" style={{ margin: '16px 0px'}} /> :
@@ -71,7 +105,7 @@ export const MainCard = ({width}: MainCardProps ) => {
 								fontSize: '24px',
 							}}/>
 						</CustomButton>
-					</div>
+					</Flex>
 				}
 				avatar={
 					isLoadingUserSelf ?
@@ -85,43 +119,50 @@ export const MainCard = ({width}: MainCardProps ) => {
 							top: '-104px',
 							border: `${colors.brand.light} 3px solid`
 					}} /> :
-					(
-						userSelf?.profile?.hasPhoto ?
-						<img 
-							style={{
-								borderRadius: '50%',
-								width: '160px',
-								height: '160px',
-								position: 'relative',
-								top: '-104px',
-								border: `${colors.brand.light} 3px solid`
-							}} 
-							src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo`} 
-						/> :
-						<div
-							style={{
-								borderRadius: '50%',
-								width: '160px',
-								height: '160px',
-								position: 'relative',
-								top: '-104px',
-								border: `${colors.brand.light} 3px solid`,
-								backgroundColor: colors.primaryNeutral[200],
-								overflow: 'hidden',
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center'
-							}}
+					<div
+						style={{
+							borderRadius: '50%',
+							width: '160px',
+							height: '160px',
+							position: 'relative',
+							top: '-104px',
+							border: `${colors.brand.light} 3px solid`,
+							overflow: 'hidden',
+							backgroundColor: colors.primaryNeutral[200]
+						}}
+					>
+						<ImageUploader
+							aspect={1/1}
+							profileId={userSelf?.profile?.id}
 						>
-							<UserOutlined 
-								style={{
-									color: colors.brand.dark,
-									fontSize: '140px',
-									overflow: 'hidden'
-								}}
-							/>
-						</div>
-					)
+							{
+								userSelf?.profile?.hasPhoto ?
+								<img 
+									style={{
+										width: '160px',
+										height: '160px'
+									}} 
+									src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo`} 
+								/> :
+								<Flex
+									justify="center"
+									align="center"
+									style={{
+										overflow: 'hidden',
+									}}
+								>
+									<UserOutlined 
+										style={{
+											color: colors.brand.dark,
+											fontSize: '140px',
+											padding: '10px',
+											overflow: 'hidden'
+										}}
+									/>
+								</Flex>
+							}
+						</ImageUploader>
+				</div>
 				}
 				description={
 					isLoadingUserSelf ?

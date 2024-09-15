@@ -30,11 +30,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
       })
 
       
-    const onFinish: FormProps['onFinish'] = () => {
+    const onFinish: FormProps['onFinish'] = async () => {
         const formData = new FormData()
         formData.append('profileImage', profileImage)
         formData.append('imageType', 'photo')
-        mutateAsync({ formData, profileId })
+        await mutateAsync({ formData, profileId })
         setModalStatus(false)
         setProfileImage(null)
         setFileList([])
@@ -62,6 +62,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                             setSelectedFile={setProfileImage}
                             setFileList={setFileList}
                             fileList={fileList}
+                            aspect={1/1}
                         />
                     </Form.Item>
                     <Form.Item>
