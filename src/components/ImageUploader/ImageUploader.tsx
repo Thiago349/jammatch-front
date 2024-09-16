@@ -4,7 +4,7 @@ import { useMutation, useQueryClient  } from '@tanstack/react-query'
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-import { putProfile } from 'src/services/api/endpoints';
+import { putProfilePhoto } from 'src/services/api/endpoints';
 
 type ImageUploaderProps = {
   aspect: number
@@ -24,7 +24,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     const queryClient = useQueryClient();
     
     const { mutate, isPending } = useMutation({
-      mutationFn: putProfile,
+      mutationFn: putProfilePhoto,
       onSuccess: () => {
         onChange(Date.now())
         queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
@@ -37,9 +37,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           showUploadList={false}
           beforeUpload={(file) => {
             const formData = new FormData()
-            formData.append('profileImage', file)
-            formData.append('imageType', imageType)
-            mutate({ formData, profileId })
+            if (file.type.includes('image')) {
+              formData.append('profileImage', file)
+              formData.append('imageType', imageType)
+              mutate({ formData, profileId })
+            }
             return false 
           }}
         >

@@ -1,35 +1,46 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import React, { useState, Dispatch, SetStateAction } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAppSelector } from "src/redux/store";
 
-import { Modal, Flex, Form } from 'antd'
+import { Modal, Flex, Form, Typography } from 'antd'
 import type { FormProps } from 'antd'
-import { CustomButton } from 'src/components'
+import { CustomButton, Input, HTMLEditor } from 'src/components'
 
 
 import { putProfile } from 'src/services/api/endpoints';
 import { colors } from 'src/styles/colors';
 import { languages } from "src/resources/languages";
 
+const { Title } = Typography
+
 type EditProfileModalProps = {
     setModalStatus: Dispatch<SetStateAction<boolean>>
     modalStatus: boolean
-    profileId: string
+    profile: {
+        id: string,
+        name: string,
+        description: string
+    }
 }
 
 const EditProfileModal: React.FC<EditProfileModalProps> = ({
     setModalStatus,
     modalStatus,
-    profileId
+    profile
 }) => {
+    const queryClient = useQueryClient();
+
     const language = useAppSelector(state => state.language.name)
+    const[name, setName] = useState<string | null>(profile.name)
+	const[description, setDescription] = useState<string | null>(profile.description)
+
     const { mutateAsync, isPending } = useMutation({
         mutationFn: putProfile
-      })
+    })
 
     const onFinish: FormProps['onFinish'] = async () => {
-        const formData = new FormData()
-        await mutateAsync({ formData, profileId })
+        await mutateAsync({ body: { name, description }, profileId: profile.id })
+        queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
         setModalStatus(false)
     };
 
@@ -43,11 +54,53 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             footer={false}
             onCancel={onCancel}
             >
-            <Form onFinish={onFinish}>
-                <Flex vertical justify='center' align='center'>
-                    <Form.Item name='profileImage' valuePropName="profileImage">
+            <Form 
+                onFinish={onFinish}
+            >
+                <Flex 
+                    vertical 
+                    justify='center' 
+                    align='center'
+                    style={{
+                        padding: '0px 24px'
+                    }}
+                >
+                    <Title level={3}>
+                        {languages[language]?.profileModal?.toUpperCase()}
+                    </Title>
+                    <Form.Item name='name' valuePropName='name'
+                        style={{
+                            width: '100%'
+                        }}
+                    >
+                        <Input 
+                            width='100%'
+                            title={languages[language].nameInput}
+                            color={colors.brand.dark}
+                            backgroundColor={colors.brand.light}
+                            onChange={setName}
+                            defaultValue={profile?.name}
+                        />
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item name='description' valuePropName='description'
+                        style={{
+                            width: '100%'
+                        }}
+                    >
+                        <HTMLEditor
+                            width='100%'
+                            text={description}
+                            setText={setDescription}
+                            title={languages[language].descriptionInput}
+                            color={colors.brand.dark}
+                            backgroundColor={colors.brand.light}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        style={{
+                            margin: '0px'
+                        }}
+                    >
                         <CustomButton
                             onForm={true}
                             defaultColor={colors.brand.light}

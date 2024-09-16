@@ -11,11 +11,13 @@ type MainInputProps = {
 	width?: string,
 	title?: string,
 	color: string,
-	password?: boolean,
-	onChange: Dispatch<SetStateAction<string | null>>
+	backgroundColor: string,
+	variant?: "outlined" | "borderless" | "filled",
+	onChange: Dispatch<SetStateAction<string | null>>,
+	defaultValue?: string
 }
 
-export const MainInput = ({ width, title, color, password, onChange }: MainInputProps ) => {
+export const MainInput = ({ width, title, color, backgroundColor, variant='outlined', onChange, defaultValue }: MainInputProps ) => {
 	return (
 		<Flex vertical style={{ width: width ?? '100%', gap: 8 }}>
 			{
@@ -30,37 +32,18 @@ export const MainInput = ({ width, title, color, password, onChange }: MainInput
 					null
 			}
 
-			{ 
-				!password ? 
-					<Input 
-						onChange={(value) => onChange(value.target.value)} 
-						variant="borderless" 
-						style={{ 
-							backgroundColor: colors.primaryNeutral[800], 
-							color: colors.brand.light, 
-							fontSize: 16, 
-							padding: 8,
-							height: 42, 
-							width: width ?? '100%' 
-						}}/> :
-					<Input.Password 
-						onChange={(value) => onChange(value.target.value)} 
-						variant="borderless" 
-						style={{ 
-							backgroundColor: colors.primaryNeutral[800], 
-							color: colors.brand.light, 
-							fontSize: 16, 
-							padding: 8,
-							height: 42, 
-							width: width ?? '100%' 
-						}} 
-						iconRender={
-							(visible) => (visible ? 
-								<EyeFilled style={{ color: colors.brand.light }}/> : 
-								<EyeInvisibleFilled style={{ color: colors.brand.light }}/>
-						)} 
-					/>
-			}
+			<Input 
+				onChange={(value) => onChange(value.target.value)} 
+				variant={variant}
+				defaultValue={defaultValue ?? ''}
+				style={{ 
+					backgroundColor: backgroundColor, 
+					color, 
+					fontSize: 16, 
+					padding: 8,
+					height: 32, 
+					width: width ?? '100%' 
+				}}/>				
 		</Flex>
 	)
 };

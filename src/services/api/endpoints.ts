@@ -26,7 +26,19 @@ export const getUserSelf = async () => {
 };
 
 
-export const putProfile = async (payload: { formData: FormData, profileId: string}) => {  
+export const putProfile = async (payload: { body: { name: string, description: string }, profileId: string }) => {  
+  const token = getToken()
+
+  const { data } = await api.put(`v1/profiles/${payload.profileId}`, 
+    payload.body, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return data;
+};
+
+
+export const putProfilePhoto = async (payload: { formData: FormData, profileId: string}) => {  
   const token = getToken()
 
   const { data } = await api.put(`v1/profiles/${payload.profileId}/photo`, 

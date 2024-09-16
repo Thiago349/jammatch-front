@@ -29,11 +29,15 @@ export const ProfileView = ({
         userSelf={userSelf}
         isLoadingUserSelf={isLoadingUserSelf}
       />
-      <EditProfileModal 
-        setModalStatus={setEditProfileModal}
-        modalStatus={editProfileModal}
-        profileId={userSelf?.profile?.id}
-      />
+      {
+        userSelf ?
+        <EditProfileModal 
+          setModalStatus={setEditProfileModal}
+          modalStatus={editProfileModal}
+          profile={userSelf?.profile}
+        /> :
+        null
+      }
     </ Flex>
   )
 }

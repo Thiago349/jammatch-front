@@ -4,11 +4,13 @@ import { useMutation } from "@tanstack/react-query";
 import { useAppSelector, useAppDispatch, authorize } from "src/redux/store";
 
 import { Card, Flex } from "antd";
-import { CustomButton, LogoLight, Input } from "src/components";
+import { CustomButton, LogoLight } from "src/components";
 
 import { postAuth } from "src/services/api/endpoints";
 import { colors } from "src/styles/colors";
 import { languages } from "src/resources/languages";
+
+import { Input } from "..";
 
 type LoginCardProps = {
 	height: string,
