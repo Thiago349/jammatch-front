@@ -13,15 +13,15 @@ const { Title } = Typography
 type MainCardProps = {
 	width: string,
 	setEditProfileModal?: Dispatch<SetStateAction<boolean>>,
-	userSelf: any,
-	isLoadingUserSelf: boolean
+	profile: any,
+	isLoadingProfile: boolean
 }
 
 export const MainCard = ({
 	width, 
 	setEditProfileModal, 
-	userSelf, 
-	isLoadingUserSelf
+	profile, 
+	isLoadingProfile
 }: MainCardProps ) => {
 	const language = useAppSelector(state => state.language.name)
 	const [photoKey, setPhotoKey] = useState<number>(Date.now())
@@ -43,7 +43,7 @@ export const MainCard = ({
 			}}
 			bordered={false}
 			cover={ 
-				isLoadingUserSelf ?
+				isLoadingProfile ?
 					<Skeleton
 						variant="rectangular"
 						style={{
@@ -52,9 +52,9 @@ export const MainCard = ({
     						height: '0'  
 						}}
 					/> :
-					userSelf?.profile?.hasBanner ?
+					profile?.hasBanner ?
 					<img 
-						src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-banner?key=${bannerKey}`} 
+						src={`https://jammatch-bucket.s3.amazonaws.com/${profile?.id}-banner?key=${bannerKey}`} 
 					/>
 						:
 					<div
@@ -77,7 +77,7 @@ export const MainCard = ({
 			>
 				<ImageUploader
 					aspect={ 1128 / 320 }
-					profileId={userSelf?.profile?.id}
+					profileId={profile?.id}
 					imageType="banner"
 					onChange={setBannerKey}
 				>
@@ -106,12 +106,12 @@ export const MainCard = ({
 				title={
 					<Flex justify='space-between' align='center'>
 						{
-							isLoadingUserSelf ?
+							isLoadingProfile ?
 							<Skeleton variant="rounded" height={32} width="30%" style={{ margin: '16px 0px'}} /> :
 							<Title level={3} style={{
 								margin: '16px 0px',
 							}}>
-								{userSelf?.profile?.name}
+								{profile?.name}
 							</Title>
 						}
 						<CustomButton
@@ -121,18 +121,21 @@ export const MainCard = ({
 								marginRight: '16px',
 								padding: 0
 							}}
-							disabled={isLoadingUserSelf}
+							disabled={isLoadingProfile}
 							onClick={setEditProfileModal}
+							defaultBgColor="transparent"
+							defaultColor={colors.brand.dark}
+							hoverBgColor={colors.brand.dark}
+							hoverColor={colors.brand.light}
 							>
 							<EditOutlined style={{
-								color: colors.brand.dark,
-								fontSize: '20px',
+								fontSize: '20px'
 							}}/>
 						</CustomButton>
 					</Flex>
 				}
 				avatar={
-					isLoadingUserSelf ?
+					isLoadingProfile ?
 					<Skeleton 
 						variant="circular" 
 						height={160}
@@ -157,18 +160,18 @@ export const MainCard = ({
 					>
 						<ImageUploader
 							aspect={ 1 }
-							profileId={userSelf?.profile?.id}
+							profileId={profile?.id}
 							imageType="photo"
 							onChange={setPhotoKey}
 						>
 							{
-								userSelf?.profile?.hasPhoto ?
+								profile?.hasPhoto ?
 								<img 
 									style={{
 										width: '160px',
 										height: '160px'
 									}} 
-									src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo?key=${photoKey}`} 
+									src={`https://jammatch-bucket.s3.amazonaws.com/${profile?.id}-photo?key=${photoKey}`} 
 								/> :
 								<Flex
 									justify="center"
@@ -191,7 +194,7 @@ export const MainCard = ({
 					</div>
 				}
 				description={
-					isLoadingUserSelf ?
+					isLoadingProfile ?
 					<>
 						{
 							[1, 2, 3].map(key => <Skeleton
@@ -213,7 +216,7 @@ export const MainCard = ({
 					>
 						<div 
 							style={{ fontWeight: 'normal', margin: '0px '}}
-							dangerouslySetInnerHTML={{ __html: userSelf?.profile?.description }}
+							dangerouslySetInnerHTML={{ __html: profile?.description }}
 						/>
 					</Title>
 				}

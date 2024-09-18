@@ -28,6 +28,17 @@ const HTMLEditor = ({
     setText(value);
   };
 
+  const modules = {
+    toolbar: [
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['clean']
+    ],
+    clipboard: {
+      matchVisual: false
+    },
+  };
+
   return (
     <Flex vertical style={{ width: width ?? '100%', gap: 8 }}>
       {
@@ -44,7 +55,8 @@ const HTMLEditor = ({
 
       <ReactQuill 
           value={text} 
-          onChange={handleChange} 
+          onChange={handleChange}
+          modules={modules}
           style={{
             backgroundColor: backgroundColor
           }}

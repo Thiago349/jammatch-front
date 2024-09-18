@@ -26,6 +26,18 @@ export const getUserSelf = async () => {
 };
 
 
+export const getProfile = async (profileId: string) => {  
+  const token = getToken()
+
+  const { data } = await api.get(`v1/profiles/${profileId}`, 
+    {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return data;
+};
+
+
 export const putProfile = async (payload: { body: { name: string, description: string }, profileId: string }) => {  
   const token = getToken()
 

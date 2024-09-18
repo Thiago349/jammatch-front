@@ -32,7 +32,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     const language = useAppSelector(state => state.language.name)
     const[name, setName] = useState<string | null>(profile.name)
-	const[description, setDescription] = useState<string | null>(profile.description)
+	const[description, setDescription] = useState<string>(profile.description)
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: putProfile
@@ -40,11 +40,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     const onFinish: FormProps['onFinish'] = async () => {
         await mutateAsync({ body: { name, description }, profileId: profile.id })
-        queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
+        queryClient.invalidateQueries({ queryKey: ['getProfileById'] })
+        setDescription(profile.description)
         setModalStatus(false)
     };
 
     const onCancel = () => {
+        setDescription(profile.description)
         setModalStatus(false)
     }
 
