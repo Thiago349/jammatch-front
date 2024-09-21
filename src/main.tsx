@@ -1,8 +1,7 @@
 import ReactDOM from 'react-dom/client'
-import { useAppDispatch, authorize } from "src/redux/store"
 
 import { Provider } from 'react-redux'
-import { store } from './redux/store'
+import { store, unauthorize } from './redux/store'
 
 import "@fontsource-variable/archivo"
 import "@fontsource-variable/inter"
@@ -20,11 +19,12 @@ const onError = async (error, query) => {
   if (error instanceof AxiosError && error.response?.status === 401) {
     try {
       await refreshAuth()
-      
       queryClient.invalidateQueries(query.queryKey)
     }
     catch (tokenError) {
       console.error('Token refresh failed:', tokenError)
+      store.dispatch(unauthorize())
+      window.location.href = '/login'
     }
   }
 }

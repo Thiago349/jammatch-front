@@ -1,5 +1,4 @@
-import { store } from "src/redux/store";
-import { authorize } from "src/redux/store";
+import { store, authorize } from "src/redux/store";
 
 import api from "./instance";
 
