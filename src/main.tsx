@@ -25,6 +25,7 @@ const onError = async (error, query) => {
       console.error('Token refresh failed:', tokenError)
       store.dispatch(unauthorize())
       window.location.href = '/login'
+      window.location.reload()
     }
   }
 }
