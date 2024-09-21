@@ -31,7 +31,7 @@ export const MainCard = ({
 		<Card 
 			styles={{
 				body: {
-					padding: '24px'
+					padding: '16px'
 				}
 			}}
 			style={{ 

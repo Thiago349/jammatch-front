@@ -1,10 +1,12 @@
 import { store } from "src/redux/store";
+import { authorize } from "src/redux/store";
 
 import api from "./instance";
 
-export const getToken = () => {
+
+const getAuth = () => {
   const reduxState = store.getState()
-  return reduxState.authentication.token;
+  return reduxState.authentication;
 };
 
 
@@ -15,8 +17,21 @@ export const postAuth = async (payload) => {
 };
 
 
+export const refreshAuth = async () => {
+  const authData = getAuth()
+  const { data } = await api.post(`v1/auth/refresh`, {
+    "refreshToken": authData.refreshToken,
+    "username": authData.username
+  });
+
+  store.dispatch(authorize({...data, refreshToken: authData.refreshToken, username: authData.username}))
+
+  return data;
+};
+
+
 export const getUserSelf = async () => {
-  const token = getToken()
+  const token = getAuth().token
 
   const { data } = await api.get(`v1/users/self`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -27,7 +42,7 @@ export const getUserSelf = async () => {
 
 
 export const getProfile = async (profileId: string) => {  
-  const token = getToken()
+  const token = getAuth().token
 
   const { data } = await api.get(`v1/profiles/${profileId}`, 
     {
@@ -39,7 +54,7 @@ export const getProfile = async (profileId: string) => {
 
 
 export const putProfile = async (payload: { body: { name: string, description: string }, profileId: string }) => {  
-  const token = getToken()
+  const token = getAuth().token
 
   const { data } = await api.put(`v1/profiles/${payload.profileId}`, 
     payload.body, {
@@ -51,7 +66,7 @@ export const putProfile = async (payload: { body: { name: string, description: s
 
 
 export const putProfilePhoto = async (payload: { formData: FormData, profileId: string}) => {  
-  const token = getToken()
+  const token = getAuth().token
 
   const { data } = await api.put(`v1/profiles/${payload.profileId}/photo`, 
     payload.formData, {

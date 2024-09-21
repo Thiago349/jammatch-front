@@ -25,24 +25,26 @@ const LanguageSlice = createSlice({
 interface AuthenticationState {
     status: boolean
     token: string | null, 
-    refreshToken: string | null
+    refreshToken: string | null,
+    username: string | null
 }
 
 const authenticationInitialState: AuthenticationState = {
     status: false,
     token: null,
-    refreshToken: null
+    refreshToken: null,
+    username: null
 }
 
 const AuthenticationSlice = createSlice({
     name: "authentication",
     initialState: authenticationInitialState,
     reducers: {
-        authorize: (state, action: PayloadAction<{ token: string, refreshToken: string }>) => {
-            return { status: true, token: action.payload.token, refreshToken: action.payload.refreshToken }
+        authorize: (_, action: PayloadAction<{ token: string, refreshToken: string, username: string }>) => {
+            return { status: true, token: action.payload.token, refreshToken: action.payload.refreshToken, username: action.payload.username }
         },
-        unauthorize: (state) => {
-            return { status: false, token: null, refreshToken: null }
+        unauthorize: (_) => {
+            return { status: false, token: null, refreshToken: null, username: null }
         }
     }
 })
@@ -59,10 +61,10 @@ const SiderSlice = createSlice({
     name: "sider",
     initialState: siderInitialState,
     reducers: {
-        expand: (state) => {
+        expand: () => {
             return { expanded: true }
         },
-        retract: (state) => {
+        retract: () => {
             return { expanded: false }
         }
     }

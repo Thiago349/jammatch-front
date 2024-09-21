@@ -25,8 +25,11 @@ export const LoginCard = ({height, maxHeight, width}: LoginCardProps ) => {
 	const[username, setUsername] = useState<string | null>(null)
 	const[password, setPassword] = useState<string | null>(null)
 
-	const onSuccess = (data) => {
-		dispatch(authorize(data))
+	const onSuccess = (data: { 
+		token: string 
+		refreshToken: string
+	}) => {
+		dispatch(authorize({...data, username: username}))
 		navigate('/home', { replace: true })
 	};
 

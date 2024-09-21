@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { Flex } from "antd";
 
-import { getUserSelf, getProfile } from "src/services/api/endpoints";
+import { getUserSelf } from "src/services/api/endpoints";
 
 import { MainCard } from "./components";
 import { EditProfileModal } from "./modals";
@@ -18,13 +18,7 @@ export const ProfileView = ({
 
   const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
 		queryKey: ['getUserSelf'],
-		queryFn: getUserSelf,
-  })
-
-  const { data: profile, isLoading: isLoadingProfile } = useQuery({
-		queryKey: ['getProfileById'],
-		queryFn: () => getProfile(userSelf.profileId),
-    enabled: !!userSelf?.profileId
+		queryFn: getUserSelf
   })
 
   return (
@@ -32,15 +26,15 @@ export const ProfileView = ({
       <MainCard 
         width="100%" 
         setEditProfileModal={setEditProfileModal}
-        profile={profile}
-        isLoadingProfile={isLoadingUserSelf || isLoadingProfile}
+        profile={userSelf?.profile}
+        isLoadingProfile={isLoadingUserSelf}
       />
       {
-        profile ?
+        userSelf?.profile ?
         <EditProfileModal 
           setModalStatus={setEditProfileModal}
           modalStatus={editProfileModal}
-          profile={profile}
+          profile={userSelf?.profile}
         /> :
         null
       }
