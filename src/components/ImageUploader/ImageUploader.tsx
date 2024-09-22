@@ -27,7 +27,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
       mutationFn: putProfilePhoto,
       onSuccess: () => {
         onChange(Date.now())
-        queryClient.invalidateQueries({ queryKey: ['getProfileById'] })
+        queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
       }
     })
     

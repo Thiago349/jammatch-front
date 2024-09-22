@@ -40,7 +40,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     const onFinish: FormProps['onFinish'] = async () => {
         await mutateAsync({ body: { name, description }, profileId: profile.id })
-        queryClient.invalidateQueries({ queryKey: ['getProfileById'] })
+        queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
         setDescription(profile.description)
         setModalStatus(false)
     };
