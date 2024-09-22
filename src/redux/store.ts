@@ -49,6 +49,31 @@ const AuthenticationSlice = createSlice({
     }
 })
 
+interface SpotifyAuthenticationState {
+    status: boolean
+    token: string | null, 
+    refreshToken: string | null
+}
+
+const spotifyAuthenticationInitialState: SpotifyAuthenticationState = {
+    status: false,
+    token: null,
+    refreshToken: null,
+}
+
+const SpotifyAuthenticationSlice = createSlice({
+    name: "spotifyAuthentication",
+    initialState: spotifyAuthenticationInitialState,
+    reducers: {
+        spotifyAuthorize: (_, action: PayloadAction<{ token: string, refreshToken: string }>) => {
+            return { status: true, token: action.payload.token, refreshToken: action.payload.refreshToken }
+        },
+        spotifyUnauthorize: (_) => {
+            return { status: false, token: null, refreshToken: null }
+        }
+    }
+})
+
 interface SiderState {
     expanded: boolean
 }
@@ -74,14 +99,30 @@ const authenticationPersistConfig = {
     key: 'authentication',
     storage,
 }
-  
+
+const spotifyAuthenticationPersistConfig = {
+    key: 'spotifyAuthentication',
+    storage,
+}
+
+const languagePersistConfig = {
+    key: 'language',
+    storage,
+}
+
+const siderPersistConfig = {
+    key: 'sider',
+    storage,
+}
 const persistedAuthenticationReducer = persistReducer(authenticationPersistConfig, AuthenticationSlice.reducer)
-const persistedLanguageReducer = persistReducer(authenticationPersistConfig, LanguageSlice.reducer)
-const persistedSiderReducer = persistReducer(authenticationPersistConfig, SiderSlice.reducer)
+const persistedSpotifyAuthenticationReducer = persistReducer(spotifyAuthenticationPersistConfig, SpotifyAuthenticationSlice.reducer)
+const persistedLanguageReducer = persistReducer(languagePersistConfig, LanguageSlice.reducer)
+const persistedSiderReducer = persistReducer(siderPersistConfig, SiderSlice.reducer)
 
 export const store = configureStore({
     reducer: {
         authentication: persistedAuthenticationReducer,
+        spotifyAuthentication: persistedSpotifyAuthenticationReducer,
         language: persistedLanguageReducer,
         sider: persistedSiderReducer
     },
@@ -93,5 +134,6 @@ export const useAppDispatch: () => typeof store.dispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector
 
 export const { authorize, unauthorize } = AuthenticationSlice.actions
+export const { spotifyAuthorize, spotifyUnauthorize } = SpotifyAuthenticationSlice.actions
 export const { changeLanguage } = LanguageSlice.actions
 export const { expand, retract } = SiderSlice.actions

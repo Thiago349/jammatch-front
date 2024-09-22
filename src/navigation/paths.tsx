@@ -1,4 +1,4 @@
-import { Login, Home, Profile } from "src/pages";
+import { Home, Profile, SpotifyCallback } from "src/pages";
 
 export type PathProps = {
 	path: string;
@@ -13,5 +13,9 @@ export const paths: PathProps[] = [
 	{
 		path: "/profile",
 		element: <Profile />
+	},
+	{
+		path: "/spotify-callback",
+		element: <SpotifyCallback />
 	}
 ];

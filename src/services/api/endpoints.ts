@@ -40,6 +40,18 @@ export const getUserSelf = async () => {
 };
 
 
+export const getSpotifySelf = async (userToken) => {
+  const token = getAuth().token
+
+  userToken
+  const { data } = await api.get(`v1/spotify/self?userToken=${userToken}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return data;
+};
+
+
 export const getProfile = async (profileId: string) => {  
   const token = getAuth().token
 

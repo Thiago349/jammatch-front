@@ -34,6 +34,9 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     return (
       <ImgCrop aspect={aspect}>
         <Upload
+          style={{
+            maxHeight: 0
+          }}
           showUploadList={false}
           beforeUpload={(file) => {
             const formData = new FormData()

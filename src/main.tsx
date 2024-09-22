@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client'
 
 import { Provider } from 'react-redux'
-import { store, unauthorize } from './redux/store'
+import { store, unauthorize, spotifyUnauthorize, persistor } from './redux/store'
 
 import "@fontsource-variable/archivo"
 import "@fontsource-variable/inter"
@@ -24,6 +24,10 @@ const onError = async (error, query) => {
     catch (tokenError) {
       console.error('Token refresh failed:', tokenError)
       store.dispatch(unauthorize())
+      store.dispatch(spotifyUnauthorize())
+
+      await persistor.flush()
+      
       window.location.href = '/login'
       window.location.reload()
     }

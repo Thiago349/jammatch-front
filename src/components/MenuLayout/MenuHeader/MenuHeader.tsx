@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch, unauthorize  } from "src/redux/store";
+import { useAppSelector, useAppDispatch, unauthorize, spotifyUnauthorize, persistor  } from "src/redux/store";
 
 import { Layout, Flex } from 'antd';
 import { LogoLightHorizontal, CustomButton } from 'src/components';
@@ -15,8 +15,11 @@ export const MenuHeader = () => {
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
-	const handleLogout = () => {
+	const handleLogout = async () => {
 		dispatch(unauthorize())
+		dispatch(spotifyUnauthorize())
+		await persistor.flush()
+		
 		navigate('/login', { replace: true })
 		window.location.reload()
 	};
