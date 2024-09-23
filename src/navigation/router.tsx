@@ -33,7 +33,7 @@ export const Router = () => {
                         )
                     })
                 }
-                    <Route path="*" element={<Navigate to={"home"} replace />} />
+                    <Route path="/*" element={<Navigate to={"home"} replace />} />
                 </Route>
             </Routes>
         </BrowserRouter>
