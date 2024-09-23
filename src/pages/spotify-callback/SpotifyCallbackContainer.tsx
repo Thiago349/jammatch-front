@@ -21,9 +21,9 @@ const SpotifyCallbackContainer = () => {
           dispatch(spotifyAuthorize({ token: data.access_token, refreshToken: data.refresh_token }))
         })
     } 
-    
+
     navigate('/profile', { replace: true })
-  }, [])
+  }, [location, history])
 
   return (
     <>
