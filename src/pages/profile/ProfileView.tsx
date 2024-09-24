@@ -34,7 +34,6 @@ export const ProfileView = ({
 		queryFn: () => getSpotifySelf(spotifyAuth.token),
     enabled: !!reduxState?.spotifyAuthentication?.token
   })
-  console.log(reduxState.spotifyAuthentication)
 
   return (
     <Flex justify="center" style={{ padding: '24px', width: '100%', height: 'fit-content', gap: '24px'  }}>

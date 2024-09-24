@@ -9,18 +9,21 @@ import { MenuLayout } from 'src/components/MenuLayout/MenuLayout';
 import { paths, PathProps } from './paths';
 
 export const Router = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
+    
 
-    useEffect(() => {
-        if (location.pathname !== '/' && location.pathname.endsWith('/')) {
-            navigate(location.pathname.slice(0, -1), { replace: true });
-        }
-    }, [location, navigate]);
+    
 
     const status = useAppSelector(state => state?.authentication?.status)
     function PrivateRoutes() {
+        const location = useLocation();
+        const navigate = useNavigate();
         const { pathname: from } = useLocation();
+        useEffect(() => {
+            if (location.pathname !== '/' && location.pathname.endsWith('/')) {
+                navigate(location.pathname.slice(0, -1), { replace: true });
+            }
+        }, [location, navigate]);
+
         return !status ? <Navigate to="/login" state={{ from }} /> : <Outlet />;
     }
 
