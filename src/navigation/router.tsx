@@ -9,30 +9,14 @@ import { MenuLayout } from 'src/components/MenuLayout/MenuLayout';
 import { paths, PathProps } from './paths';
 
 export const Router = () => {
-    
-
-    
-
     const status = useAppSelector(state => state?.authentication?.status)
-    function PrivateRoutes() {
-        const location = useLocation();
-        const navigate = useNavigate();
-        const { pathname: from } = useLocation();
-        useEffect(() => {
-            if (location.pathname !== '/' && location.pathname.endsWith('/')) {
-                navigate(location.pathname.slice(0, -1), { replace: true });
-            }
-        }, [location, navigate]);
-
-        return !status ? <Navigate to="/login" state={{ from }} /> : <Outlet />;
-    }
 
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<Login/>}/>
-                <Route element={<PrivateRoutes />}>
-                {
+                {   
+                    status ?
                     paths.map((p: PathProps) => {
                         const {
                             path,
@@ -45,10 +29,9 @@ export const Router = () => {
                                 </MenuLayout>
                             }/>
                         )
-                    })
+                    }) :
+                    <Route path="/*" element={<Navigate to={"login"} replace />} />
                 }
-                    <Route path="/*" element={<Navigate to={"home"} replace />} />
-                </Route>
             </Routes>
         </BrowserRouter>
     )

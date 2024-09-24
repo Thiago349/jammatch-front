@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom'
+
 import { Home, Profile, SpotifyCallback } from "src/pages";
 
 export type PathProps = {
@@ -9,6 +11,10 @@ export const paths: PathProps[] = [
 	{
 		path: "/home",
 		element: <Home />
+	},
+	{
+		path: "/*",
+		element: <Navigate to={"home"} replace />
 	},
 	{
 		path: "/profile",
