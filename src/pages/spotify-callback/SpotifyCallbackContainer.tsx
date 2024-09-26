@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { spotifyAuthorize } from 'src/redux/store'
 
-import { postAuth } from "src/services/spotify/endpoints"
+import { postSpotifyAuth } from "src/services/api/endpoints";
+
 import { useDispatch } from 'react-redux'
 
 const SpotifyCallbackContainer = () => {
@@ -16,7 +17,7 @@ const SpotifyCallbackContainer = () => {
     const code = query.get('code')
 
     if (code) {
-      postAuth(code)
+      postSpotifyAuth(code)
         .then(data => {
           dispatch(spotifyAuthorize({ token: data.access_token, refreshToken: data.refresh_token }))
         })

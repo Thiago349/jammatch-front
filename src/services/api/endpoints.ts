@@ -40,11 +40,21 @@ export const getUserSelf = async () => {
 };
 
 
+export const postSpotifyAuth = async (code: string) => {
+  const token = getAuth().token
+
+  const { data } = await api.post(`v1/spotify-services/auth`, { code: code }, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return data;
+};
+
+
 export const getSpotifySelf = async (userToken) => {
   const token = getAuth().token
 
-  userToken
-  const { data } = await api.get(`v1/spotify/self?userToken=${userToken}`, {
+  const { data } = await api.get(`v1/spotify-services/self?userToken=${userToken}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
