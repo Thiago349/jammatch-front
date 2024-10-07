@@ -1,39 +1,22 @@
-import { useState } from "react";
-import { useAppSelector, store } from "src/redux/store";
+import { useState } from "react"
 
-import { useQuery } from "@tanstack/react-query";
+import { Card, Flex } from "antd"
+import { Avatar, Cover, Description, EditBannerBtn, Name } from "./components"
+import { EditProfileModal } from "./modals"
 
-import { Card, Flex } from "antd";
+import { useUserData } from "src/hooks"
 
-import { getUserSelf, getSpotifySelf } from "src/services/api/endpoints";
-
-import { Avatar, Cover, Description, EditBannerBtn, Name } from "./components";
-import { EditProfileModal } from "./modals";
-
-import { colors } from "src/styles/colors";
+import { colors } from "src/styles/colors"
 
 export type TProfileView = {
 }
 
 export const ProfileView = ({
 }: TProfileView) => {
-  const reduxState = store.getState()
-
   const [editProfileModal, setEditProfileModal] = useState<boolean>(false)
 	const [bannerKey, setBannerKey] = useState<number>(Date.now())
-  const spotifyAuth = useAppSelector(state => state.spotifyAuthentication)
 
-
-  const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
-		queryKey: ['getUserSelf'],
-		queryFn: getUserSelf
-  })
-
-  const { data: spotifySelf, isLoading: isLoadingSpotifySelf } = useQuery({
-		queryKey: ['getSpotifySelf'],
-		queryFn: () => getSpotifySelf(spotifyAuth.token),
-    enabled: !!reduxState?.spotifyAuthentication?.token
-  })
+  const { userSelf, isLoadingUserSelf } = useUserData()
 
   return (
     <Flex justify="center" style={{ padding: '24px', width: '100%', height: 'fit-content', gap: '24px'  }}>

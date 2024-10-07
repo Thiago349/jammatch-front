@@ -6,7 +6,6 @@ import { Modal, Flex, Form, Typography } from 'antd'
 import type { FormProps } from 'antd'
 import { CustomButton, Input, HTMLEditor } from 'src/components'
 
-
 import { putProfile } from 'src/services/api/endpoints';
 import { colors } from 'src/styles/colors';
 import { languages } from "src/resources/languages";

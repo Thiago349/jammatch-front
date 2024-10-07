@@ -45,7 +45,7 @@ export const Name = ({
 					</Title>
 					{
 						profile?.roles.map(role => 
-							<Tag color="gold" style={{ fontWeight: 'bold', height: 'fit-content', marginRight: '8px' }}>
+							<Tag key={role?.label} color="gold" style={{ fontWeight: 'bold', height: 'fit-content', marginRight: '8px' }}>
 								{languages[language]?.roles?.[role?.label]?.toUpperCase()}
 							</Tag>
 						)

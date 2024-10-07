@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAppSelector, useAppDispatch, authorize } from "src/redux/store";
 
 import { Card, Flex } from "antd";
 import { CustomButton, LogoLight } from "src/components";
 
-import { postAuth } from "src/services/api/endpoints";
+import { postAuth, getUserSelf } from "src/services/api/endpoints";
+
+import { handleSpotifyLogin } from "src/utils"
 import { colors } from "src/styles/colors";
 import { languages } from "src/resources/languages";
 
@@ -24,19 +26,33 @@ export const LoginCard = ({height, maxHeight, width}: LoginCardProps ) => {
 	const navigate = useNavigate()
 	const[username, setUsername] = useState<string | null>(null)
 	const[password, setPassword] = useState<string | null>(null)
+	const[token, setToken] = useState<string | null>(null)
 
 	const onSuccess = (data: { 
 		token: string 
 		refreshToken: string
 	}) => {
 		dispatch(authorize({...data, username: username}))
-		navigate('/home', { replace: true })
+		setToken(data.token)
 	};
-
-	const { mutateAsync: authenticate } = useMutation({
+	
+	const { mutateAsync: authenticate, isPending: isPending } = useMutation({
 		mutationFn: postAuth,
 		onSuccess: onSuccess
 	});
+	
+	const { data: userSelf } = useQuery({
+		queryKey: ['getUserSelfSpotifyVerification'],
+		queryFn: getUserSelf,
+		enabled: !!token
+	})
+
+	useEffect(() => {
+		if (userSelf) {
+			if (!userSelf?.spotify) navigate('/home', { replace: true })
+			else handleSpotifyLogin()
+		}
+	}, [userSelf])
 
 	const login = async () => {
 		authenticate({'username': username, 'password': password})
@@ -86,6 +102,7 @@ export const LoginCard = ({height, maxHeight, width}: LoginCardProps ) => {
 						padding: 8,
 						justifySelf: 'flex-end',
 					}}
+					loading={isPending || !!token}
 					defaultBgColor={colors.primaryNeutral[800]}
 					defaultColor={colors.brand.light}
 					hoverBgColor={colors.brand.jamPurple}
