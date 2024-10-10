@@ -46,7 +46,7 @@ export const MenuHeader = () => {
 		  	<MenuButton
 				icon={
 					<SpotifyOutlined 
-						style={{ fontSize: '24px' }}
+						style={{ fontSize: '24px', color: spotifyAuthorization ? '#1DB954' : 'inherit'  }}
 					/>
 				}
 				onClick={handleSpotifyLogin}
@@ -124,7 +124,11 @@ export const MenuHeader = () => {
 									<UserOutlined 
 										style={{
 											color: colors.brand.dark,
-											fontSize: '32px',
+											backgroundColor: colors.brand.light,
+											margin: '0px 10px',
+											borderRadius: '50%',
+											padding: '4px',
+											fontSize: '24px',
 											overflow: 'hidden'
 										}}
 									/>

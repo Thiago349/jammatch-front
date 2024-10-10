@@ -13,8 +13,8 @@ export const useUserData = () => {
 
   const { data: spotifySelf, isLoading: isLoadingSpotifySelf } = useQuery({
     queryKey: ['getSpotifySelf'],
-    queryFn: () => getSpotifySelf(spotifyAuth.token),
-    enabled: !!reduxState?.spotifyAuthentication?.token,
+    queryFn: () => getSpotifySelf(),
+    enabled: !!spotifyAuth?.token,
   });
 
   return { userSelf, isLoadingUserSelf, spotifySelf, isLoadingSpotifySelf };
