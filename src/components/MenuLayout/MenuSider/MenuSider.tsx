@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAppSelector, useAppDispatch, expand, retract } from "src/redux/store";
 
 import { Button, Flex, Layout } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
+import { ExperimentOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 
 import SideButton from './SideButton';
 
@@ -34,6 +34,16 @@ export const MenuSider = () => {
 						}}/>}
 						siderExpanded={siderExpanded}
 						route='/profile'
+					/>
+					<SideButton 
+						label={languages[language].siderLaboratoryBtn}
+						icon={<ExperimentOutlined style={{
+							color: colors.brand.light,
+							margin: '0px 12px',
+							fontSize: '20px',
+						}}/>}
+						siderExpanded={siderExpanded}
+						route='/laboratory'
 					/>
 				</Flex>
 				<Button

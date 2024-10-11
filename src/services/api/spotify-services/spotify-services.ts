@@ -9,7 +9,7 @@ const getAuth = () => {
 };
 
 
-export const postSpotifyRefresh = async (refreshToken: string) => {
+const postSpotifyRefresh = async (refreshToken: string) => {
   const token = getAuth().token
 
   const { data } = await api.post(`v1/spotify-services/auth/refresh`, { refreshToken: refreshToken }, {
@@ -20,7 +20,7 @@ export const postSpotifyRefresh = async (refreshToken: string) => {
 };
 
 
-const getSpotifyAuth = async () => {
+export const getSpotifyAuth = async () => {
   const spotifyRefreshToken = store.getState().spotifyAuthentication.refreshToken
   const spotifyToken = await postSpotifyRefresh(spotifyRefreshToken)
   return spotifyToken?.access_token;

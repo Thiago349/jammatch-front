@@ -67,7 +67,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                     }}
                 >
                     <Title level={3}>
-                        {languages[language]?.profileModal?.toUpperCase()}
+                        {languages[language]?.profile?.editModalTitle?.toUpperCase()}
                     </Title>
                     <Form.Item name='name' valuePropName='name'
                         style={{
