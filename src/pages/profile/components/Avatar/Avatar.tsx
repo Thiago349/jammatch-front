@@ -29,7 +29,7 @@ export const Avatar = ({
 				borderRadius: '50%',
 				width: '160px',
 				position: 'relative',
-				top: '-104px',
+				top: '-94.5px',
 				border: `${colors.brand.light} 3px solid`
 		}} /> :
 		<>
