@@ -6,7 +6,7 @@ export const useUserData = () => {
   const reduxState = store.getState();
   const spotifyAuth = useAppSelector(state => state.spotifyAuthentication);
 
-  const { data: userSelf, isLoading: isLoadingUserSelf } = useQuery({
+  const { data: userSelf, isLoading: isLoadingUserSelf, isFetching: isFetchingUserSelf } = useQuery({
     queryKey: ['getUserSelf'],
     queryFn: getUserSelf,
   });
@@ -17,5 +17,5 @@ export const useUserData = () => {
     enabled: !!spotifyAuth?.token,
   });
 
-  return { userSelf, isLoadingUserSelf, spotifySelf, isLoadingSpotifySelf };
+  return { userSelf, isLoadingUserSelf, isFetchingUserSelf, spotifySelf, isLoadingSpotifySelf };
 };

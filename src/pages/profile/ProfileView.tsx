@@ -16,7 +16,7 @@ export const ProfileView = ({
   const [editProfileModal, setEditProfileModal] = useState<boolean>(false)
 	const [bannerKey, setBannerKey] = useState<number>(Date.now())
 
-  const { userSelf, isLoadingUserSelf } = useUserData()
+  const { userSelf, isLoadingUserSelf, isFetchingUserSelf } = useUserData()
 
   return (
     <Flex justify="center" style={{ padding: '24px', width: '100%', height: 'fit-content', gap: '24px'  }}>
@@ -56,16 +56,16 @@ export const ProfileView = ({
         <Card.Meta
           title={<Name 
             profile={userSelf?.profile}
-            isLoadingProfile={isLoadingUserSelf}
+            isLoadingProfile={isLoadingUserSelf || isFetchingUserSelf}
             setEditProfileModal={setEditProfileModal}
           />}
           avatar={<Avatar 
             profile={userSelf?.profile}
-            isLoadingProfile={isLoadingUserSelf}
+            isLoadingProfile={isLoadingUserSelf || isFetchingUserSelf}
           />}
           description={<Description 
             description={userSelf?.profile?.description}
-            isLoadingProfile={isLoadingUserSelf}
+            isLoadingProfile={isLoadingUserSelf || isFetchingUserSelf}
           />}
         />
       </Card>

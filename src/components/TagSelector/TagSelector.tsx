@@ -2,6 +2,8 @@ import React, { useState, Dispatch, SetStateAction } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAppSelector } from "src/redux/store";
 
+import { Skeleton } from "@mui/material";
+
 import { Modal, Flex, Select, List, Typography } from 'antd'
 import type { FormProps } from 'antd'
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons'
@@ -41,35 +43,28 @@ const TagModal: React.FC<TagModalProps> = ({
         enabled: !!profileType
     })
 
+    const onSuccess = () => {
+        setSelectedTagId(null)
+        queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
+    }
+    
+    const { mutate: newRoleAttachment, isPending: isNewRoleAttachmentPending } = useMutation({
+        mutationFn: postRoleAttachments,
+        onSuccess: onSuccess
+    })
+
+    const { mutate: eraseRoleAttachment, isPending: isDeleteRoleAttachmentPending } = useMutation({
+        mutationFn: deleteRoleAttachments,
+        onSuccess: onSuccess
+    })
+
     const handleChange = (value: string) => {
         setSelectedTagId(value)
       }
 
-    const onFinish: FormProps['onFinish'] = async () => {
-        setModalStatus(false)
-    }
-
     const onCancel = () => {
-        setModalStatus(false)
-    }
-
-    const onSuccess = () => {
         setSelectedTagId(null)
-        queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
-	}
-    
-    const { mutate: newRoleAttachment, isPending: isNewRoleAttachmentPending } = useMutation({
-		mutationFn: postRoleAttachments,
-		onSuccess: onSuccess
-	})
-
-    const { mutate: eraseRoleAttachment, isPending: isDeleteRoleAttachmentPending } = useMutation({
-		mutationFn: deleteRoleAttachments,
-		onSuccess: onSuccess
-	})
-
-    const onAdd = (roleId: string) => {
-        newRoleAttachment({ profileId: profileId, roleId: roleId })
+        setModalStatus(false)
     }
 
     const roleSelectedOptions = {}
@@ -79,6 +74,7 @@ const TagModal: React.FC<TagModalProps> = ({
         }
     }
 
+    const isQueryLoading = isLoadingRoles || isLoadingProfile || isDeleteRoleAttachmentPending || isNewRoleAttachmentPending
     return (
         <Modal
             open={modalStatus}
@@ -105,13 +101,14 @@ const TagModal: React.FC<TagModalProps> = ({
                     <Select
                         showSearch
                         optionFilterProp="label"
-                        disabled={isLoadingRoles || isLoadingProfile || isDeleteRoleAttachmentPending || isNewRoleAttachmentPending}
-                        loading={isLoadingRoles || isLoadingProfile || isDeleteRoleAttachmentPending || isNewRoleAttachmentPending}
+                        disabled={isQueryLoading}
+                        loading={isQueryLoading}
                         style={{ width: '100%' }}
                         value={selectedTagId}
                         onChange={handleChange}
                         options={
-                            roles?.filter(role => !Object.keys(roleSelectedOptions)?.includes(role.id))?.map(role => {
+                            roles?.filter(role => !Object.keys(roleSelectedOptions)?.includes(role.id))?.map(role => 
+                            {
                                 return { 
                                     label: languages[language]?.roles?.[role.label],
                                     value: role.id
@@ -120,7 +117,7 @@ const TagModal: React.FC<TagModalProps> = ({
                         }
                     />
                     <CustomButton
-                        loading={isLoadingRoles || isLoadingProfile || isDeleteRoleAttachmentPending || isNewRoleAttachmentPending}
+                        loading={isQueryLoading}
                         onClick={() => newRoleAttachment({profileId: profileId, roleId: selectedTagId})}
                         icon={<PlusOutlined />}
                         defaultColor={colors.brand.light}
@@ -135,24 +132,35 @@ const TagModal: React.FC<TagModalProps> = ({
                 <List
                     size="small"
                     bordered
-                    dataSource={profileRoles}
+                    dataSource={profileRoles?.length > 0 ? profileRoles : [{}]}
                     renderItem={(role: any) => (
+                        profileRoles.length ? 
                         <List.Item>
-                            <Flex justify='space-between' style={{
+                            <Flex justify='space-between' align='center' style={{
                                 width: '100%'
                             }}>
-                                <Title level={5} style={{ margin: 0 }}>
-                                    {languages[language]?.roles?.[role.label]}
-                                </Title>
+                                {
+                                !isQueryLoading ? 
+                                    <Title level={5} style={{ margin: 0 }}>
+                                        {languages[language]?.roles?.[role.label]}
+                                    </Title> : 
+                                    <Skeleton 
+                                        variant="rounded" 
+                                        height={24} 
+                                        width="30%" 
+                                    />
+
+                                }
                                 <CustomButton
-                                    loading={isLoadingRoles || isLoadingProfile || isDeleteRoleAttachmentPending || isNewRoleAttachmentPending}
+                                    loading={isQueryLoading}
                                     onClick={() => eraseRoleAttachment(role.roleAttachmentId)}
                                     icon={<CloseOutlined />}
                                     defaultColor={colors.brand.dark}
                                     hoverColor={colors.error[800]}
                                 />
                             </Flex>
-                        </List.Item>
+                        </List.Item> :
+                        <List.Item />
                     )}
                     style={{
                         width: '100%'
