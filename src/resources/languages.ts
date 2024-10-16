@@ -4,6 +4,7 @@ import { Laboratory } from "src/pages";
 export const languages = {
     portuguese: {
         confirmBtn: "Confirmar",
+        cancelBtn: "Cancelar",
         siderProfileBtn: "Perfil",
         generateBtn: "Gerar",
         siderLaboratoryBtn: "Laboratório",
@@ -12,7 +13,8 @@ export const languages = {
         passwordInput: "Senha",
         descriptionInput: "Descrição",
         profile: {
-            editModalTitle: "EDITAR PERFIL" 
+            editModalTitle: "Editar Perfil",
+            editRoleTitle: "Selecione novas funções:" 
         },
         laboratory: {
             chooseMethodTitle: "Descubra novas músicas de diferentes formas:",

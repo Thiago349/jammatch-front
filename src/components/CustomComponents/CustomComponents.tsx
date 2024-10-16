@@ -2,11 +2,11 @@ import { ConfigProvider } from 'antd';
 
 import { colors } from 'src/styles/colors';
 
-type CustomDropdownProps = {
+type CustomComponentsProps = {
 	children?: JSX.Element | string
 }
 
-export const CustomDropdown = ({ children }: CustomDropdownProps ) => {
+export const CustomComponents = ({ children }: CustomComponentsProps ) => {
 	return (
 		<ConfigProvider theme={{
 			components: {
@@ -14,6 +14,12 @@ export const CustomDropdown = ({ children }: CustomDropdownProps ) => {
 				colorBgElevated: colors.brand.dark,
 				controlItemBgHover: colors.primaryNeutral[600],
 				controlPaddingHorizontal: 0,
+			  },
+			  Segmented: {
+				itemSelectedBg: colors.brand.light,
+				itemSelectedColor: colors.brand.dark,
+				itemColor: colors.brand.dark,
+				trackBg: colors.primaryNeutral[200]
 			  }
 			}
 		  }}>			
@@ -22,4 +28,4 @@ export const CustomDropdown = ({ children }: CustomDropdownProps ) => {
 	)
 };
 
-export default CustomDropdown; 
+export default CustomComponents; 

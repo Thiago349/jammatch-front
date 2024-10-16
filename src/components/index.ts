@@ -4,6 +4,7 @@ export { default as LogoLight } from "./Logo/LogoLight";
 export { default as LogoDarkHorizontal } from "./Logo/LogoDarkHorizontal";
 export { default as LogoLightHorizontal } from "./Logo/LogoLightHorizontal";
 export { default as CustomButton } from "./CustomButton/CustomButton";
-export { default as CustomDropdown } from "./CustomDropdown/CustomDropdown";
+export { default as CustomComponents } from "./CustomComponents/CustomComponents"
 export { default as ImageUploader } from "./ImageUploader/ImageUploader";
+export { default as TagSelector } from "./TagSelector/TagSelector";
 export { default as HTMLEditor } from "./HTMLEditor/HTMLEditor";

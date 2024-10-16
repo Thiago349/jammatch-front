@@ -1,10 +1,13 @@
 import { Dispatch, SetStateAction } from 'react'
+import { useAppSelector } from "src/redux/store";
+
 import { useMutation, useQueryClient  } from '@tanstack/react-query'
 
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
 import { putProfilePhoto } from 'src/services/api/endpoints';
+import { languages } from 'src/resources/languages';
 
 type ImageUploaderProps = {
   aspect: number
@@ -22,7 +25,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     onChange
 }) => {
     const queryClient = useQueryClient();
-    
+    const language = useAppSelector(state => state.language.name)
+
     const { mutate, isPending } = useMutation({
       mutationFn: putProfilePhoto,
       onSuccess: () => {
@@ -32,7 +36,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     })
     
     return (
-      <ImgCrop aspect={aspect}>
+      <ImgCrop aspect={aspect} 
+        modalTitle=' '
+        modalOk={languages[language].confirmBtn}
+        modalCancel={languages[language].cancelBtn}
+      >
         <Upload
           style={{
             maxHeight: 0

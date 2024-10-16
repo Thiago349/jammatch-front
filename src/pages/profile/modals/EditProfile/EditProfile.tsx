@@ -66,8 +66,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         padding: '0px 24px'
                     }}
                 >
-                    <Title level={3}>
-                        {languages[language]?.profile?.editModalTitle?.toUpperCase()}
+                    <Title 
+                        level={3}
+                        style={{
+                            margin: 16
+                        }}
+                    >
+                        {languages[language]?.profile?.editModalTitle}
                     </Title>
                     <Form.Item name='name' valuePropName='name'
                         style={{

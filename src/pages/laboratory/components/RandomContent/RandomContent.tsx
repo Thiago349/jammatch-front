@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useAppSelector } from "src/redux/store";
 
@@ -12,12 +12,20 @@ import { postLabServiceRandom } from "src/services/api/endpoints";
 
 const { Title } = Typography
 
+export type TRandomContent = {
+    setNewPlaylistModal: Dispatch<SetStateAction<boolean>>
+    setNewPlaylist: Dispatch<SetStateAction<any>>
+}
 
-export const RandomContent = () => {
+export const RandomContent = ({ setNewPlaylistModal, setNewPlaylist }: TRandomContent) => {
 	const language = useAppSelector(state => state.language.name)
 
-    const { mutate: mutateLabServiceRandom, data: randomPlaylist, isPending: isLabServiceRandomPending } = useMutation({
+    const { mutate: mutateRandomPlaylist, isPending: isRandomPlaylistPending } = useMutation({
         mutationFn: postLabServiceRandom,
+        onSuccess: (data) => {
+            setNewPlaylistModal(true)
+            setNewPlaylist(data)
+        }
     })
 
 	return (
@@ -35,17 +43,18 @@ export const RandomContent = () => {
 				{ languages[language]?.laboratory?.randomMethodTitle }
 			</Title>
             <CustomButton 
-                onClick={mutateLabServiceRandom}
+                onClick={mutateRandomPlaylist}
+                loading={isRandomPlaylistPending}
                 style={{ 
                     height: 32, 
                     fontSize: 16, 
-                    padding: 8,
                     justifySelf: 'flex-end',
                 }}
                 defaultBgColor={colors.primaryNeutral[800]}
                 defaultColor={colors.brand.light}
                 hoverBgColor={colors.brand.jamPurple}
-                hoverColor={ colors.brand.light}>
+                hoverColor={ colors.brand.light}
+            >
                     { languages[language]?.generateBtn }
             </CustomButton>
 		</Flex>

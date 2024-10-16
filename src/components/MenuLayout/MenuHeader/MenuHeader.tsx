@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch, unauthorize, spotifyUnauthorize, persis
 import { Dropdown, Layout, Flex, Typography } from 'antd'
 import type { MenuProps } from 'antd';
 import { UserOutlined } from '@ant-design/icons'
-import { LogoLightHorizontal, CustomButton, CustomDropdown } from 'src/components'
+import { LogoLightHorizontal, CustomButton, CustomComponents } from 'src/components'
 import { MenuButton } from '..'
 import { CaretDownFilled, CaretUpFilled, SpotifyOutlined, LogoutOutlined } from '@ant-design/icons'
 
@@ -75,22 +75,22 @@ export const MenuHeader = () => {
 		padding: '6px',
 		backgroundColor: colors.brand.dark,
 		borderBottom: `solid ${colors.primaryNeutral[1000]} 2px`,
-	  }
+	}
 
 	return (
 		<Header style={headerStyle}>
 			<Flex justify='space-between' style={{ height: '100%', margin:'0px 27.5px' }}>
 				<CustomButton 
-					style={{ 
-						height: '100%', 
-						padding: 0, 
-						border: 0 
-					}}
+						style={{ 
+							height: '100%', 
+							padding: 0, 
+							border: 0 
+						}}
 						onClick={() => navigate('/home')}
 					>
 					<LogoLightHorizontal height="100%"/>
 				</CustomButton>
-				<CustomDropdown>
+				<CustomComponents>
 					<Dropdown 
 						menu={{ items: dropdownItems }} 
 						trigger={['click']}
@@ -168,7 +168,7 @@ export const MenuHeader = () => {
 							/>
 						</Flex>
 					</Dropdown>
-				</CustomDropdown>
+				</CustomComponents>
 			</Flex>
 		</Header>
 	)

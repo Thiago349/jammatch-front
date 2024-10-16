@@ -1,11 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useAppSelector } from "src/redux/store";
 
 import { Skeleton } from "@mui/material";
-import { Flex, Tag, Typography } from "antd";
+import { Checkbox, Dropdown, Flex, Tag, Typography } from "antd";
+import type { MenuProps } from 'antd';
 import { EditOutlined } from '@ant-design/icons'
 
-import { CustomButton } from "src/components";
+import { CustomButton, TagSelector } from "src/components";
 
 import { colors } from "src/styles/colors";
 import { languages } from 'src/resources/languages';
@@ -24,6 +25,7 @@ export const Name = ({
 	setEditProfileModal
 }: NameProps ) => {
 	const language = useAppSelector(state => state.language.name)
+	const [tagSelectorModal, setTagSelectorModal] = useState<boolean>(false)
 
 	return (
 		<Flex justify='space-between' align='flex-end'>
@@ -50,26 +52,48 @@ export const Name = ({
 							</Tag>
 						)
 					}
+						<Tag 
+							key='add' 
+							color='gold'
+							style={{
+								fontWeight: 'bold', 
+								height: 'fit-content', 
+								marginRight: '8px', 
+								fontSize: '16px',
+								cursor: 'pointer'
+							}}
+							onClick={() => setTagSelectorModal(true)}
+						>
+							+
+						</Tag>
 				</Flex>
 			}
 			<CustomButton
-			style={{ 
-				height: '32px',
-				width: '32px',
-				marginRight: '16px',
-				padding: 0
-			}}
-			disabled={isLoadingProfile}
-			onClick={setEditProfileModal}
-			defaultBgColor="transparent"
-			defaultColor={colors.brand.dark}
-			hoverBgColor={colors.brand.dark}
-			hoverColor={colors.brand.light}
+				style={{ 
+					height: '32px',
+					width: '32px',
+					marginRight: '16px',
+					padding: 0
+				}}
+				disabled={isLoadingProfile}
+				onClick={() => setEditProfileModal(true)}
+				defaultBgColor="transparent"
+				defaultColor={colors.brand.dark}
+				hoverBgColor={colors.brand.dark}
+				hoverColor={colors.brand.light}
 			>
-			<EditOutlined style={{
-				fontSize: '20px'
-			}}/>
+				<EditOutlined style={{
+					fontSize: '20px'
+				}}/>
 			</CustomButton>
+			<TagSelector 
+				setModalStatus={setTagSelectorModal}
+				modalStatus={tagSelectorModal}
+				isLoadingProfile={isLoadingProfile}
+				profileId={profile?.id}
+				profileRoles={profile?.roles}
+				profileType={profile?.type}
+			/>
 		</Flex>
 	)
 };
