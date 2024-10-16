@@ -14,7 +14,7 @@ export const languages = {
         descriptionInput: "Descrição",
         profile: {
             editModalTitle: "Editar Perfil",
-            editRoleTitle: "Selecione novas funções:" 
+            editRoleTitle: "Edite suas funções:" 
         },
         laboratory: {
             chooseMethodTitle: "Descubra novas músicas de diferentes formas:",

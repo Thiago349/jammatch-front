@@ -35,37 +35,49 @@ export const Name = ({
 				<Flex 
 					style={{
 						height: '100%',
-						maxWidth: '90%',
 						overflow: 'hidden'
 					}}
+					gap='8px'
 					align='flex-end'
 				>
 					<Title level={3} style={{
-						margin: '16px 16px 0px 0px',
+						margin: '16px 0px 0px 0px',
 					}}>
 						{profile?.name}
 					</Title>
-					{
-						profile?.roles.map(role => 
-							<Tag key={role?.label} color="gold" style={{ fontWeight: 'bold', height: 'fit-content', marginRight: '8px' }}>
-								{languages[language]?.roles?.[role?.label]?.toUpperCase()}
-							</Tag>
-						)
-					}
-						<Tag 
-							key='add' 
-							color='gold'
-							style={{
-								fontWeight: 'bold', 
-								height: 'fit-content', 
-								marginRight: '8px', 
-								fontSize: '16px',
-								cursor: 'pointer'
-							}}
-							onClick={() => setTagSelectorModal(true)}
-						>
-							+
-						</Tag>
+					<Flex style={{
+						overflow: 'hidden'
+					}}>
+						{
+							profile?.roles.map(role => 
+								<Tag key={role?.label} color="gold" 
+									style={{ 
+										fontWeight: 'bold', 
+										height: 'fit-content', 
+										marginRight: '8px',
+										overflow: 'hidden',
+										textOverflow: 'ellipsis'
+									}}
+								>
+									{languages[language]?.roles?.[role?.label]?.toUpperCase()}
+								</Tag>
+							)
+						}
+					</Flex>
+					<Tag 
+						key='add' 
+						color='gold'
+						style={{
+							fontWeight: 'bold', 
+							height: 'fit-content', 
+							marginRight: '8px', 
+							fontSize: '16px',
+							cursor: 'pointer'
+						}}
+						onClick={() => setTagSelectorModal(true)}
+					>
+						+
+					</Tag>
 				</Flex>
 			}
 			<CustomButton
