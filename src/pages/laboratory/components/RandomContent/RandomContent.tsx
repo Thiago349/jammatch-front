@@ -19,6 +19,7 @@ export type TRandomContent = {
 
 export const RandomContent = ({ setNewPlaylistModal, setNewPlaylists }: TRandomContent) => {
 	const language = useAppSelector(state => state.language.name)
+    const spotifyAuthorization = useAppSelector(state => state.spotifyAuthentication.status)
 
     const { mutate: mutateRandomPlaylist, isPending: isRandomPlaylistPending } = useMutation({
         mutationFn: postLabServiceRandom,
@@ -54,6 +55,7 @@ export const RandomContent = ({ setNewPlaylistModal, setNewPlaylists }: TRandomC
                 defaultColor={colors.brand.light}
                 hoverBgColor={colors.brand.jamPurple}
                 hoverColor={ colors.brand.light}
+                disabled={!spotifyAuthorization}
             >
                     { languages[language]?.generateBtn }
             </CustomButton>

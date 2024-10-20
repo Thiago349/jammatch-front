@@ -30,7 +30,7 @@ export const CustomButton = ({ style, children, icon, defaultColor, defaultBgCol
 				defaultActiveBg: defaultBgColor ?? 'transparent',
 				defaultActiveBorderColor:  defaultBgColor ?? 'transparent',
 				defaultActiveColor:  defaultColor ?? colors.brand.light,
-				borderColorDisabled:  defaultBgColor ?? 'transparent'
+				borderColorDisabled:  'transparent'
 			  }
 			}
 		  }}>
