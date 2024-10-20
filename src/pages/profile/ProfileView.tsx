@@ -36,7 +36,7 @@ export const ProfileView = ({
         bordered={false}
         cover={<Cover 
           profile={userSelf?.profile}
-          isLoadingProfile={isLoadingUserSelf}
+          isLoadingProfile={isLoadingUserSelf || isFetchingUserSelf}
           bannerKey={bannerKey}
         />}
       >

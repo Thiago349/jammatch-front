@@ -45,16 +45,19 @@ export const Name = ({
 					}}>
 						{profile?.name}
 					</Title>
-					<Flex style={{
-						overflow: 'hidden'
-					}}>
+					<Flex 
+						style={{
+							overflow: 'hidden'
+						}}
+						gap='8px'
+					>
 						{
 							profile?.roles.map(role => 
 								<Tag key={role?.label} color="gold" 
 									style={{ 
 										fontWeight: 'bold', 
 										height: 'fit-content', 
-										marginRight: '8px',
+										marginRight: '0px',
 										overflow: 'hidden',
 										textOverflow: 'ellipsis'
 									}}

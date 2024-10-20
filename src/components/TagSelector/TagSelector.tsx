@@ -86,9 +86,6 @@ const TagModal: React.FC<TagModalProps> = ({
                 justify='center' 
                 align='start'
                 gap='16px'
-                style={{
-                    padding: '0px 24px'
-                }}
             >
                 <Title level={5} style={{ margin: 0 }}>
                     {languages[language]?.profile?.editRoleTitle}
@@ -132,9 +129,11 @@ const TagModal: React.FC<TagModalProps> = ({
                 <List
                     size="small"
                     bordered
-                    dataSource={profileRoles?.length > 0 ? profileRoles : [{}]}
+                    dataSource={profileRoles}
+                    locale={{
+                        emptyText: languages[language]?.profile?.emptyRoleTitle
+                    }}
                     renderItem={(role: any) => (
-                        profileRoles.length ? 
                         <List.Item>
                             <Flex justify='space-between' align='center' style={{
                                 width: '100%'
@@ -159,8 +158,7 @@ const TagModal: React.FC<TagModalProps> = ({
                                     hoverColor={colors.error[800]}
                                 />
                             </Flex>
-                        </List.Item> :
-                        <List.Item />
+                        </List.Item>
                     )}
                     style={{
                         width: '100%'

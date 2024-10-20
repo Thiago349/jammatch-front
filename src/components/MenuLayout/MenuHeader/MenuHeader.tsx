@@ -90,85 +90,83 @@ export const MenuHeader = () => {
 					>
 					<LogoLightHorizontal height="100%"/>
 				</CustomButton>
-				<CustomComponents>
-					<Dropdown 
-						menu={{ items: dropdownItems }} 
-						trigger={['click']}
-						onOpenChange={setProfileMenuOpen}
-						overlayStyle={{
-							top: '52px'
-						}}
-					>
-						<Flex align="center" style={{
-							height: '100%',
-							cursor: 'grab'
-						}}>
-							{
-								userSelf?.profile?.hasPhoto ?
-								<img 
+				<Dropdown 
+					menu={{ items: dropdownItems }} 
+					trigger={['click']}
+					onOpenChange={setProfileMenuOpen}
+					overlayStyle={{
+						top: '52px'
+					}}
+				>
+					<Flex align="center" style={{
+						height: '100%',
+						cursor: 'grab'
+					}}>
+						{
+							userSelf?.profile?.hasPhoto ?
+							<img 
+								style={{
+									width: '32px',
+									height: '32px',
+									margin: '0px 10px',
+									borderRadius: '50%'
+								}} 
+								src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo?key=${photoKey}`} 
+							/> :
+							<Flex
+								justify="center"
+								align="center"
+								style={{
+									overflow: 'hidden'
+								}}
+							>
+								<UserOutlined 
 									style={{
-										width: '32px',
-										height: '32px',
+										color: colors.brand.dark,
+										backgroundColor: colors.brand.light,
 										margin: '0px 10px',
-										borderRadius: '50%'
-									}} 
-									src={`https://jammatch-bucket.s3.amazonaws.com/${userSelf?.profile?.id}-photo?key=${photoKey}`} 
-								/> :
-								<Flex
-									justify="center"
-									align="center"
-									style={{
+										borderRadius: '50%',
+										padding: '4px',
+										fontSize: '24px',
 										overflow: 'hidden'
 									}}
-								>
-									<UserOutlined 
-										style={{
-											color: colors.brand.dark,
-											backgroundColor: colors.brand.light,
-											margin: '0px 10px',
-											borderRadius: '50%',
-											padding: '4px',
-											fontSize: '24px',
-											overflow: 'hidden'
-										}}
-									/>
-								</Flex>
-							}
-							<Flex vertical justify="space-between" style={{
-								overflow: 'hidden',
-								whiteSpace: 'nowrap',
-							}}>
-								<Title style={{
-									color: colors.brand.light,
-									margin: 0,
-									fontSize: '16px',
-									textOverflow: 'ellipsis'
-								}}
-								>
-									{userSelf?.profile?.name}
-								</Title>
-								<Title style={{
-									color: colors.primaryNeutral[500],
-									margin: 0,
-									fontSize: '12px',
-									textOverflow: 'ellipsis'
-								}}
-								>
-									{userSelf?.username}
-								</Title>
+								/>
 							</Flex>
-							<CaretDownFilled 
-								style={{
-									color: colors.brand.light,
-									margin: '0px 10px',
-									fontSize: '16px',
-									transition: 'transform 0.3s ease',
-									transform: profileMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-								}}
-							/>
+						}
+						<Flex vertical justify="space-between" style={{
+							overflow: 'hidden',
+							whiteSpace: 'nowrap',
+						}}>
+							<Title style={{
+								color: colors.brand.light,
+								margin: 0,
+								fontSize: '16px',
+								textOverflow: 'ellipsis'
+							}}
+							>
+								{userSelf?.profile?.name}
+							</Title>
+							<Title style={{
+								color: colors.primaryNeutral[500],
+								margin: 0,
+								fontSize: '12px',
+								textOverflow: 'ellipsis'
+							}}
+							>
+								{userSelf?.username}
+							</Title>
 						</Flex>
-					</Dropdown>
-				</CustomComponents>
+						<CaretDownFilled 
+							style={{
+								color: colors.brand.light,
+								margin: '0px 10px',
+								fontSize: '16px',
+								transition: 'transform 0.3s ease',
+								transform: profileMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+							}}
+						/>
+					</Flex>
+				</Dropdown>
 			</Flex>
 		</Header>
 	)

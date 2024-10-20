@@ -9,6 +9,7 @@ import "@fontsource-variable/inter"
 import { QueryClient, QueryClientProvider, QueryCache } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
+import { CustomComponents } from './components'
 import { refreshAuth } from "src/services/api/endpoints"
 
 import { Router } from './navigation/router'
@@ -56,8 +57,10 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
+    <CustomComponents>
       <QueryClientProvider client={queryClient}>
           <Router />
       </QueryClientProvider>
+    </CustomComponents>
   </Provider>
 )

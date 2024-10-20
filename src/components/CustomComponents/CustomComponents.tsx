@@ -20,7 +20,13 @@ export const CustomComponents = ({ children }: CustomComponentsProps ) => {
 				itemSelectedColor: colors.brand.dark,
 				itemColor: colors.brand.dark,
 				trackBg: colors.primaryNeutral[200]
-			  }
+			  },
+			  Modal: {
+				contentBg: colors.brand.light
+			  },
+			  Table: {
+				rowHoverBg: colors.primaryNeutral[200],
+			  },
 			}
 		  }}>			
 			{children}

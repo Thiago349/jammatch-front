@@ -62,21 +62,15 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                     vertical 
                     justify='center' 
                     align='center'
-                    style={{
-                        padding: '0px 24px'
-                    }}
+                    gap='16px'
                 >
-                    <Title 
-                        level={3}
-                        style={{
-                            margin: 16
-                        }}
-                    >
+                    <Title level={5} style={{ margin: 0, width: '100%' }}>
                         {languages[language]?.profile?.editModalTitle}
                     </Title>
                     <Form.Item name='name' valuePropName='name'
                         style={{
-                            width: '100%'
+                            width: '100%',
+                            margin: '0px'
                         }}
                     >
                         <Input 
@@ -90,7 +84,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                     </Form.Item>
                     <Form.Item name='description' valuePropName='description'
                         style={{
-                            width: '100%'
+                            width: '100%',
+                            margin: '0px'
                         }}
                     >
                         <HTMLEditor

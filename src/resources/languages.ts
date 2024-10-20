@@ -1,6 +1,3 @@
-import { profile } from "console";
-import { Laboratory } from "src/pages";
-
 export const languages = {
     portuguese: {
         confirmBtn: "Confirmar",
@@ -13,14 +10,18 @@ export const languages = {
         passwordInput: "Senha",
         descriptionInput: "Descrição",
         profile: {
-            editModalTitle: "Editar Perfil",
-            editRoleTitle: "Edite suas funções:" 
+            editModalTitle: "Edite seu perfil:",
+            editRoleTitle: "Edite suas funções:",
+            emptyRoleTitle: "Sem funções atribuídas." 
         },
         laboratory: {
             chooseMethodTitle: "Descubra novas músicas de diferentes formas:",
             randomMethod: "Aleatório",
             randomMethodTitle: "Crie uma playlist aleatória!",
-            calendarMethod: "Calendário"
+            calendarMethod: "Calendário",
+            musicPlaylistView: "Músicas",
+            paramPlaylistView: "Parâmetros",
+            playlistNamePlaceholder: "Digite um nome para sua playlist"
         },
         roles: {
             DRUMMER: "Baterista",

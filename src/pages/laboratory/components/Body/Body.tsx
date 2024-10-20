@@ -5,7 +5,7 @@ import { Flex, Segmented, Typography } from "antd";
 
 import { CustomComponents } from "src/components";
 import { languages } from 'src/resources/languages';
-import { SegmentedOptions } from '../../constants'
+import { MethodOptions } from '../../constants'
 import { RandomContent } from '..'
 import { NewPlaylistModal } from "../../modals";
 
@@ -24,13 +24,13 @@ export const Body = ({
 }: BodyProps ) => {
 	const language = useAppSelector(state => state.language.name)
 	const [newPlaylistModal, setNewPlaylistModal] = useState<boolean>(false)
-	const [newPlaylist, setNewPlaylist] = useState<any>(null)
+	const [newPlaylists, setNewPlaylists] = useState<any[]>([])
 	const [segmentedValue, setSegmentedValue] = useState<string | number>('random');
 
 	let content = <></>
 	if (segmentedValue == 'random') content = <RandomContent 
 		setNewPlaylistModal={ setNewPlaylistModal }
-		setNewPlaylist={ setNewPlaylist }
+		setNewPlaylists={ setNewPlaylists }
 	/>
 
 	return (
@@ -49,16 +49,14 @@ export const Body = ({
 			>
 				{ languages[language]?.laboratory?.chooseMethodTitle }
 			</Title>
-			<CustomComponents>
-				<Segmented 
-					style={{
-						width: 'fit-content',
-					}}
-					options={SegmentedOptions(language)}
-					value={segmentedValue} 
-					onChange={setSegmentedValue}
-				/>
-			</CustomComponents>
+			<Segmented 
+				style={{
+					width: 'fit-content',
+				}}
+				options={MethodOptions(language)}
+				value={segmentedValue} 
+				onChange={setSegmentedValue}
+			/>
 			<Flex 
 				style={{
 					height: '100%',
@@ -67,11 +65,12 @@ export const Body = ({
 			}}>
 				{content}
 			</Flex>
-			<NewPlaylistModal 
+			<NewPlaylistModal
 				setModalStatus={setNewPlaylistModal}
 				modalStatus={newPlaylistModal}
-				profile={profile}
-				playlist={newPlaylist}
+				setNewPlaylists={setNewPlaylists}
+				playlists={newPlaylists}
+				profileId={profile?.id}
 			/>
 		</Flex>
 	)

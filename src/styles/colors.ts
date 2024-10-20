@@ -48,7 +48,7 @@ export const colors = {
     "700": "#F76707",
   },
   brand: {
-    light: "#F8F8F2",
+    light: "#FBFBFA",
     dark: "#2C2C2C",
     jamPurple: "#73378C"
   },

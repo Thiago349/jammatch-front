@@ -14,17 +14,17 @@ const { Title } = Typography
 
 export type TRandomContent = {
     setNewPlaylistModal: Dispatch<SetStateAction<boolean>>
-    setNewPlaylist: Dispatch<SetStateAction<any>>
+    setNewPlaylists: Dispatch<SetStateAction<any>>
 }
 
-export const RandomContent = ({ setNewPlaylistModal, setNewPlaylist }: TRandomContent) => {
+export const RandomContent = ({ setNewPlaylistModal, setNewPlaylists }: TRandomContent) => {
 	const language = useAppSelector(state => state.language.name)
 
     const { mutate: mutateRandomPlaylist, isPending: isRandomPlaylistPending } = useMutation({
         mutationFn: postLabServiceRandom,
         onSuccess: (data) => {
             setNewPlaylistModal(true)
-            setNewPlaylist(data)
+            setNewPlaylists([data])
         }
     })
 

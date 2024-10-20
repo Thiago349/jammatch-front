@@ -1,40 +1,57 @@
-import React, { useState, Dispatch, SetStateAction } from 'react'
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useAppSelector } from "src/redux/store";
+import { useAppSelector } from "src/redux/store"
 
-import { Modal, Flex, Form, Typography } from 'antd'
+import { SpotifyOutlined } from '@ant-design/icons'
+
+import { Modal, Flex, Form, Input, Segmented, Button } from 'antd'
 import type { FormProps } from 'antd'
-import { CustomButton, Input, HTMLEditor } from 'src/components'
 
-import { putProfile } from 'src/services/api/endpoints';
-import { colors } from 'src/styles/colors';
-import { languages } from "src/resources/languages";
+import { Params, Playlist } from '../../components'
 
-const { Title } = Typography
+import { SpotifyFrame, CustomButton, CustomComponents, EditableCell } from 'src/components'
+
+import { colors } from 'src/styles/colors'
+import { languages } from "src/resources/languages"
+import { PlaylistViewOptions } from '../../constants'
+
 
 type NewPlaylistModalProps = {
     setModalStatus: Dispatch<SetStateAction<boolean>>
     modalStatus: boolean
-    profile: {
-        id: string
-    }
-    playlist: any
+    setNewPlaylists: Dispatch<SetStateAction<any>>
+    playlists: any
+    profileId: string
 }
 
 const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
     setModalStatus,
     modalStatus,
-    profile,
-    playlist
+    setNewPlaylists,
+    playlists,
+    profileId
 }) => {
     const language = useAppSelector(state => state.language.name)
-
+    const [pageNumber, setPageNumber] = useState<number>(0)
+    const [selectedTrackId, setSelectedTrackId] = useState<string>(null)
+    const [segmentedValue, setSegmentedValue] = useState<string | number>('musics')
+    
     const onFinish: FormProps['onFinish'] = async () => {
+        setSelectedTrackId(null)
+        setPageNumber(0)
         setModalStatus(false)
-    };
+    }
 
     const onCancel = () => {
+        setSelectedTrackId(null)
+        setPageNumber(0)
         setModalStatus(false)
+    }
+
+    const setName = (name: string) => {
+        const newPlaylistInstance = [...playlists]
+        newPlaylistInstance[pageNumber] = {...newPlaylistInstance[pageNumber], name: name }
+        setNewPlaylists(newPlaylistInstance)
     }
 
     return (
@@ -42,21 +59,55 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
             open={modalStatus}
             footer={false}
             onCancel={onCancel}
-            >
+        >
             <Form 
                 onFinish={onFinish}
             >
-                <Flex 
+                <Flex
                     vertical 
                     justify='center' 
-                    align='center'
-                    style={{
-                        padding: '0px 24px'
-                    }}
+                    align='start'
+                    gap='12px'
                 >
-                    <Title level={3}>
-                        {String(playlist?.message)}
-                    </Title>
+                    <EditableCell 
+                        handleValue={setName}
+                        value={playlists?.[pageNumber]?.name}
+                        placeholder={languages[language].laboratory.playlistNamePlaceholder}
+                    />
+                    <Segmented 
+                        style={{
+                            width: '100%',
+                        }}
+                        options={PlaylistViewOptions(language)}
+                        value={segmentedValue} 
+                        onChange={setSegmentedValue}
+                        block
+                    />
+                    <Flex 
+                        style={{
+                            width: '100%',
+                            height: 'fit-content'
+                        }}
+                    >
+                        { 
+                            segmentedValue == 'musics' ? <Playlist
+                                setSelectedTrackId={setSelectedTrackId}
+                                selectedTrackId={selectedTrackId}
+                                setNewPlaylists={setNewPlaylists}
+                                playlists={playlists}
+                                pageNumber={pageNumber}
+                            /> :
+                            <Params 
+                                setNewPlaylists={setNewPlaylists}
+                                playlists={playlists}
+                                pageNumber={pageNumber}
+                            />
+                    }
+                    </Flex>
+                    <SpotifyFrame 
+                        trackId={selectedTrackId}
+                        visible={!!selectedTrackId}
+                    />
                 </Flex>
             </Form>
         </Modal>
