@@ -21,8 +21,8 @@ import { colors } from 'src/styles/colors'
 const { Title } = Typography
 
 interface TrackType {
-  trackId: string
-  trackName: string
+  id: string
+  name: string
   artists: string[]
   album: string
   durationMs: number
@@ -99,7 +99,7 @@ const Playlist: React.FC<PlaylistModalProps> = ({
     pageNumber
 }) => {
   const columns: TableColumnsType<TrackType> = [
-    { key: 'sort', align: 'center', render: () => <DragHandle />, width: '48px' },
+    { key: 'sort', align: 'center', render: () => <DragHandle />, width: '70px' },
     {
       render: (_: string, record: TrackType) =>
         (
@@ -114,7 +114,7 @@ const Playlist: React.FC<PlaylistModalProps> = ({
                       color: colors.brand.dark
                   }}
               >
-                  {record?.trackName}
+                  {record?.name}
               </Title>
               <Title 
                   ellipsis    
@@ -140,17 +140,17 @@ const Playlist: React.FC<PlaylistModalProps> = ({
                   marginRight: '16px',
                   padding: 0
               }}
-              onClick={() => setSelectedTrackId(record?.trackId)}
+              onClick={() => setSelectedTrackId(record?.id)}
               defaultBgColor="transparent"
               defaultColor={colors.brand.dark}
               hoverColor={colors.brand.jamPurple}
           >
               <SpotifyOutlined 
-                  style={{ fontSize: '24px', color: record?.trackId == selectedTrackId ? '#1DB954' : 'inherit'  }}
+                  style={{ fontSize: '24px', color: record?.id == selectedTrackId ? '#1DB954' : 'inherit'  }}
               />
           </CustomButton>
         ),
-      width: '48px'
+      width: '70px'
     }
   ]
 
@@ -163,8 +163,8 @@ const Playlist: React.FC<PlaylistModalProps> = ({
             let activeIndex = -1
             let overIndex = -1
             for (let i = 0; i < playlistTracks.length; i += 1) {
-              if (playlistTracks[i]?.trackId == active?.id) activeIndex = i
-              if (playlistTracks[i]?.trackId == over?.id) overIndex = i
+              if (playlistTracks[i]?.id == active?.id) activeIndex = i
+              if (playlistTracks[i]?.id == over?.id) overIndex = i
             }
             const newPlaylistTracks = arrayMove(playlistTracks, activeIndex, overIndex)
             newPlaylists[pageNumber].tracks = newPlaylistTracks
@@ -176,23 +176,23 @@ const Playlist: React.FC<PlaylistModalProps> = ({
 
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
-        <SortableContext items={playlists[pageNumber].tracks.map((i) => i.trackId)} strategy={verticalListSortingStrategy}>
-            <Table
-                showHeader={false}
-                rowKey="trackId"
-                components={{ body: { row: Row } }}
-                columns={columns}
-                dataSource={playlists[pageNumber].tracks}
-                style={{
-                    width: '100%',
-                    height: '400px',
-                    border: `2px solid ${colors.primaryNeutral[200]}`,
-                    borderRadius: '8px'
-                }}
-                pagination={false}
-                scroll={{ y: 400, x: 0 }}
-            />
-        </SortableContext>
+      <SortableContext items={playlists[pageNumber].tracks.map((i) => i.id)} strategy={verticalListSortingStrategy}>
+          <Table
+              showHeader={false}
+              rowKey="id"
+              components={{ body: { row: Row } }}
+              columns={columns}
+              dataSource={playlists[pageNumber].tracks}
+              style={{
+                  width: '100%',
+                  height: '400px',
+                  border: `2px solid ${colors.primaryNeutral[200]}`,
+                  borderRadius: '8px'
+              }}
+              pagination={false}
+              scroll={{ y: 400, x: 0 }}
+          />
+      </SortableContext>
     </DndContext>
   )
 }

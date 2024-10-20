@@ -5,9 +5,9 @@ import { useAppSelector, useAppDispatch, unauthorize, spotifyUnauthorize, persis
 import { Dropdown, Layout, Flex, Typography } from 'antd'
 import type { MenuProps } from 'antd';
 import { UserOutlined } from '@ant-design/icons'
-import { LogoLightHorizontal, CustomButton, CustomComponents } from 'src/components'
+import { LogoLightHorizontal, CustomButton } from 'src/components'
 import { MenuButton } from '..'
-import { CaretDownFilled, CaretUpFilled, SpotifyOutlined, LogoutOutlined } from '@ant-design/icons'
+import { CaretDownFilled, SpotifyOutlined, LogoutOutlined } from '@ant-design/icons'
 
 import { handleSpotifyLogin } from "src/utils"
 import { useUserData } from "src/hooks"

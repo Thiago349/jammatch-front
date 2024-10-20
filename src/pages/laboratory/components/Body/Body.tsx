@@ -3,7 +3,6 @@ import { useAppSelector } from "src/redux/store";
 
 import { Flex, Segmented, Typography } from "antd";
 
-import { CustomComponents } from "src/components";
 import { languages } from 'src/resources/languages';
 import { MethodOptions } from '../../constants'
 import { RandomContent } from '..'

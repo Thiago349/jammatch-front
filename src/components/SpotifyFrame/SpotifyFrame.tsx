@@ -4,8 +4,6 @@ type SpotifyFrameProps = {
 }
 
 export const SpotifyFrame = ({ trackId, visible }: SpotifyFrameProps ) => {
-	// if (!visible) return null
-	
 	return (
 		<iframe 
             style={{ 

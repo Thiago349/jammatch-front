@@ -1,8 +1,10 @@
 import React, { useRef, useState, Dispatch, SetStateAction } from 'react'
 import type { GetRef, InputRef } from 'antd'
-import { Flex, Form, Input } from 'antd'
+import { Flex, Form, Input, Typography } from 'antd'
 import { AnyObject } from 'antd/es/_util/type'
 import { colors } from 'src/styles/colors'
+
+const { Title, Paragraph } = Typography
 
 type EditableCellProps = {
   handleValue: Dispatch<SetStateAction<any>>
@@ -46,7 +48,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
                 color: colors.brand.dark,
                 height: '32px',
                 padding: '0px 12px',
-                fontSize: '14px'
+                fontSize: '16px'
             }}
         />
     ) : (
@@ -56,13 +58,15 @@ const EditableCell: React.FC<EditableCellProps> = ({
                 width: 'calc(100% - 32px)',
                 color: colors.brand.dark,
                 height: '32px',
-                padding: '0px 12px',
-                fontSize: '14px',
-                fontWeight: 'bold'
+                padding: '0px 12px'
             }}
             onClick={() => toggleEdit(true)}
         >
-            {value}
+            <Title style={{
+                fontSize: '16px'
+            }}>
+                {value}
+            </Title>
         </Flex>
     )
 }

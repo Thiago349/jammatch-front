@@ -7,9 +7,9 @@ import { SpotifyOutlined } from '@ant-design/icons'
 import { Modal, Flex, Form, Input, Segmented, Button } from 'antd'
 import type { FormProps } from 'antd'
 
-import { Params, Playlist } from '../../components'
+import { Params, Playlist } from './components'
 
-import { SpotifyFrame, CustomButton, CustomComponents, EditableCell } from 'src/components'
+import { SpotifyFrame, CustomButton, EditableCell } from 'src/components'
 
 import { colors } from 'src/styles/colors'
 import { languages } from "src/resources/languages"
@@ -90,7 +90,8 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
                         }}
                     >
                         { 
-                            segmentedValue == 'musics' ? <Playlist
+                            segmentedValue == 'musics' ? 
+                            <Playlist
                                 setSelectedTrackId={setSelectedTrackId}
                                 selectedTrackId={selectedTrackId}
                                 setNewPlaylists={setNewPlaylists}

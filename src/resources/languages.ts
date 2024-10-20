@@ -21,7 +21,16 @@ export const languages = {
             calendarMethod: "Calendário",
             musicPlaylistView: "Músicas",
             paramPlaylistView: "Parâmetros",
-            playlistNamePlaceholder: "Digite um nome para sua playlist"
+            playlistNamePlaceholder: "Digite um nome para sua playlist",
+            params: {
+                genres: 'Gêneros',
+                danceability: "Dançabilidade",
+                energy: "Energia",
+                acousticness: "Acusticidade",
+                instrumentalness: "Instrumentalidade",
+                loudness: "Volume",
+                happiness: "Felicidade"
+            }
         },
         roles: {
             DRUMMER: "Baterista",
@@ -48,6 +57,20 @@ export const languages = {
             MUSICIAN: "Músico",
             MUSIC_PRODUCER: "Produtor Musical",
             EVENT_PRODUCER: "Produtor de Eventos"
+        },
+        genres: {
+            pop: "Pop",
+            rock: "Rock",
+            jazz: "Jazz",
+            classical: "Clássico",
+            hipHop: "Hip-Hop",
+            country: "Country",
+            blues: "Blues",
+            reggae: "Reggae",
+            electronic: "Eletrônica",
+            folk: "Folk",
+            soul: "Soul",
+            metal: "Metal"
         }
     }
 }
