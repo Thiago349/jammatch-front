@@ -81,7 +81,7 @@ const Params: React.FC<ParamsModalProps> = ({
             renderItem={(item) => (
                 <List.Item
                     style={{
-                        height: 396 / 9,
+                        height: 396 / 7,
                         padding: '0px 16px'
                     }}
                 >

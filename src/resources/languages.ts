@@ -70,7 +70,20 @@ export const languages = {
             electronic: "Eletrônica",
             folk: "Folk",
             soul: "Soul",
-            metal: "Metal"
+            metal: "Metal",
+            disco: "Disco",
+            funk: "Funk",
+            indie: "Indie",
+            punk: "Punk",
+            bossanova: "Bossa Nova",
+            samba: "Samba",
+            sertanejo: "Sertanejo",
+            forro: "Forró",
+            salsa: "Salsa",
+            ska: "Ska",
+            grunge: "Grunge",
+            mpb: "MPB",
+            pagode: "Pagode"
         }
     }
 }

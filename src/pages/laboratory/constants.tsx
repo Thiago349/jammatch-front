@@ -28,6 +28,19 @@ export function PlaylistGenresViewOptions(language) {
         { color: "cyan", label: languages[language]?.genres.electronic, value: 'electronic' },
         { color: "green", label: languages[language]?.genres.folk, value: 'folk' },
         { color: "geekblue", label: languages[language]?.genres.soul, value: 'soul' },
-        { color: "red", label: languages[language]?.genres.metal, value: 'metal' }
-    ]
+        { color: "red", label: languages[language]?.genres.metal, value: 'metal' },
+        { color: "magenta", label: languages[language]?.genres.disco, value: 'disco' },
+        { color: "orange", label: languages[language]?.genres.funk, value: 'funk' },
+        { color: "lime", label: languages[language]?.genres.indie, value: 'indie' },
+        { color: "volcano", label: languages[language]?.genres.punk, value: 'punk' },
+        { color: "purple", label: languages[language]?.genres.bossanova, value: 'bossanova' },
+        { color: "green", label: languages[language]?.genres.samba, value: 'samba' },
+        { color: "orange", label: languages[language]?.genres.sertanejo, value: 'sertanejo' },
+        { color: "gold", label: languages[language]?.genres.forro, value: 'forro' },
+        { color: "red", label: languages[language]?.genres.salsa, value: 'salsa' },
+        { color: "blue", label: languages[language]?.genres.ska, value: 'ska' },   
+        { color: "red", label: languages[language]?.genres.grunge, value: 'grunge' },
+        { color: "green", label: languages[language]?.genres.mpb, value: 'mpb' },  
+        { color: "geekblue", label: languages[language]?.genres.pagode, value: 'pagode' }
+    ];
 }
