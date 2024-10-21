@@ -16,7 +16,7 @@ const generateRandomString = (length: number) => {
 
 const handleSpotifyLogin = () => {
     const state = generateRandomString(16)
-    const scope = 'user-read-private user-read-email'
+    const scope = 'user-read-private user-read-email playlist-modify-private playlist-modify-public'
 
     const spotifyAuthUrl = 'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
