@@ -48,7 +48,7 @@ const Params: React.FC<ParamsModalProps> = ({
     const data = Object.keys(parameters).map((key) => ({
         title: languages[language]?.laboratory?.params[key],
         icon: musicParametersIcons[key as keyof typeof musicParametersIcons],
-        value: parameters[key as keyof typeof parameters],
+        value: key == 'loudness' ? ((parameters[key as keyof typeof parameters] + 60) / 60) : parameters[key as keyof typeof parameters],
         color: musicParametersColors[key as keyof typeof musicParametersColors]
     }))
 
