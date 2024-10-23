@@ -3,8 +3,6 @@ import { useState } from "react"
 import { Card, Flex } from "antd"
 import { Body } from "./components"
 
-import { useUserData } from "src/hooks"
-
 import { colors } from "src/styles/colors"
 
 export type TLaboratoryView = {
@@ -12,7 +10,6 @@ export type TLaboratoryView = {
 
 export const LaboratoryView = ({
 }: TLaboratoryView) => {
-  const { userSelf, isLoadingUserSelf } = useUserData()
 
   return (
     <Flex justify="center" style={{ padding: '24px', width: '100%', gap: '24px'  }}>
@@ -33,10 +30,7 @@ export const LaboratoryView = ({
         }}
         bordered={false}
       >
-        <Body
-          profile={userSelf?.profile}
-          isLoadingProfile={isLoadingUserSelf}
-        />
+        <Body />
       </Card>
     </ Flex>
   )

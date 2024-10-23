@@ -13,13 +13,9 @@ import { colors } from "src/styles/colors";
 const { Title } = Typography
 
 type BodyProps = {
-	profile: any,
-	isLoadingProfile: boolean
 }
 
 export const Body = ({
-	profile, 
-	isLoadingProfile
 }: BodyProps ) => {
 	const language = useAppSelector(state => state.language.name)
 	const [newPlaylistModal, setNewPlaylistModal] = useState<boolean>(false)
@@ -69,7 +65,6 @@ export const Body = ({
 				modalStatus={newPlaylistModal}
 				setNewPlaylists={setNewPlaylists}
 				playlists={newPlaylists}
-				profileId={profile?.id}
 			/>
 		</Flex>
 	)

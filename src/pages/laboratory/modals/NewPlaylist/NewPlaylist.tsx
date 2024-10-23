@@ -2,18 +2,21 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAppSelector } from "src/redux/store"
 
-import { SpotifyOutlined } from '@ant-design/icons'
+import { ExportOutlined } from '@ant-design/icons'
 
 import { Modal, Flex, Form, Input, Segmented, Button } from 'antd'
 import type { FormProps } from 'antd'
 
 import { Params, Playlist } from './components'
 
+import { useUserData } from 'src/hooks'
 import { SpotifyFrame, CustomButton, EditableCell } from 'src/components'
 
 import { colors } from 'src/styles/colors'
 import { languages } from "src/resources/languages"
 import { PlaylistViewOptions } from '../../constants'
+
+import { postSpotifyPlaylist } from "src/services/api/endpoints";
 
 
 type NewPlaylistModalProps = {
@@ -21,7 +24,6 @@ type NewPlaylistModalProps = {
     modalStatus: boolean
     setNewPlaylists: Dispatch<SetStateAction<any>>
     playlists: any
-    profileId: string
 }
 
 const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
@@ -29,13 +31,13 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
     modalStatus,
     setNewPlaylists,
     playlists,
-    profileId
 }) => {
     const language = useAppSelector(state => state.language.name)
     const [pageNumber, setPageNumber] = useState<number>(0)
     const [selectedTrackId, setSelectedTrackId] = useState<string>(null)
     const [segmentedValue, setSegmentedValue] = useState<string | number>('musics')
-    
+    const { spotifySelf, isLoadingSpotifySelf } = useUserData()
+
     const onFinish: FormProps['onFinish'] = async () => {
         setSelectedTrackId(null)
         setPageNumber(0)
@@ -53,6 +55,13 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
         newPlaylistInstance[pageNumber] = {...newPlaylistInstance[pageNumber], name: name }
         setNewPlaylists(newPlaylistInstance)
     }
+
+    const { mutate: mutateNewSpotifyPlaylist, isPending: isNewSpotifyPlaylistPending } = useMutation({
+        mutationFn: postSpotifyPlaylist
+        // onSuccess: (data) => {
+        //     setNewPlaylists([data])
+        // }
+    })
 
     return (
         <Modal
@@ -105,6 +114,32 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
                             />
                     }
                     </Flex>
+                    <CustomButton
+                        style={{
+                            alignSelf: 'end'
+                        }}
+                        onClick={() => mutateNewSpotifyPlaylist({
+                            spotifyUserId: spotifySelf?.id,
+                            name: playlists?.[pageNumber]?.name,
+                            tracks: playlists?.[pageNumber]?.tracks.map(track => track?.id)
+                        })}
+                        disabled={!playlists?.[pageNumber]?.name}
+                        loading={!!isNewSpotifyPlaylistPending}
+                        defaultBgColor={colors.brand.dark}
+                        defaultColor={colors.brand.light}
+                        hoverBgColor={colors.brand.jamPurple}
+                    >
+                        <Flex
+                            gap='8px'
+                        >
+                            {languages[language]?.laboratory?.exportToSpotifyBtn}
+                            <ExportOutlined 
+                                style={{
+                                    fontSize: '16px'
+                                }}
+                            />
+                        </Flex>
+                    </CustomButton>
                     <SpotifyFrame 
                         trackId={selectedTrackId}
                         visible={!!selectedTrackId}

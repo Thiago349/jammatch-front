@@ -27,6 +27,17 @@ export const getSpotifyAuth = async () => {
 };
 
 
+export const postSpotifyAuth = async (code: string) => {
+  const token = getAuth().token
+
+  const { data } = await api.post(`v1/spotify-services/auth`, { code: code }, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return data;
+};
+
+
 export const getSpotifySelf = async (userToken?: string) => {
   const token = getAuth().token
   const spotifyToken = userToken ?? await getSpotifyAuth()
@@ -39,10 +50,14 @@ export const getSpotifySelf = async (userToken?: string) => {
 };
 
 
-export const postSpotifyAuth = async (code: string) => {
+export const postSpotifyPlaylist = async (payload: {
+  spotifyToken?: string, spotifyUserId: string, name: string, tracks: string[]
+}) => {
   const token = getAuth().token
+  const spotifyToken = await getSpotifyAuth()
+  payload.spotifyToken = spotifyToken
 
-  const { data } = await api.post(`v1/spotify-services/auth`, { code: code }, {
+  const { data } = await api.post(`v1/spotify-services/playlists`, payload, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
