@@ -2,7 +2,7 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAppSelector } from "src/redux/store"
 
-import { ExportOutlined } from '@ant-design/icons'
+import { CheckOutlined, ExportOutlined } from '@ant-design/icons'
 
 import { Modal, Flex, Form, Input, Segmented, Button } from 'antd'
 import type { FormProps } from 'antd'
@@ -57,10 +57,12 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
     }
 
     const { mutate: mutateNewSpotifyPlaylist, isPending: isNewSpotifyPlaylistPending } = useMutation({
-        mutationFn: postSpotifyPlaylist
-        // onSuccess: (data) => {
-        //     setNewPlaylists([data])
-        // }
+        mutationFn: postSpotifyPlaylist,
+        onSuccess: () => {
+            const newPlaylistInstance = [...playlists]
+            newPlaylistInstance[pageNumber] = {...newPlaylistInstance[pageNumber], saved: true }
+            setNewPlaylists(newPlaylistInstance)
+        }
     })
 
     return (
@@ -80,7 +82,7 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
                 >
                     <EditableCell 
                         handleValue={setName}
-                        value={playlists?.[pageNumber]?.name}
+                        value={playlists[pageNumber]?.name}
                         placeholder={languages[language].laboratory.playlistNamePlaceholder}
                     />
                     <Segmented 
@@ -120,30 +122,76 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
                         }}
                         onClick={() => mutateNewSpotifyPlaylist({
                             spotifyUserId: spotifySelf?.id,
-                            name: playlists?.[pageNumber]?.name,
-                            tracks: playlists?.[pageNumber]?.tracks.map(track => track?.id)
+                            name: playlists[pageNumber]?.name,
+                            tracks: playlists[pageNumber]?.tracks.map(track => track?.id)
                         })}
-                        disabled={!playlists?.[pageNumber]?.name}
+                        disabled={!playlists[pageNumber]?.name || !!playlists[pageNumber]?.saved}
                         loading={!!isNewSpotifyPlaylistPending}
                         defaultBgColor={colors.brand.dark}
                         defaultColor={colors.brand.light}
                         hoverBgColor={colors.brand.jamPurple}
+                        disabledBgColor={!playlists[pageNumber]?.saved ? null : 'transparent'}
                     >
-                        <Flex
-                            gap='8px'
-                        >
-                            {languages[language]?.laboratory?.exportToSpotifyBtn}
-                            <ExportOutlined 
-                                style={{
-                                    fontSize: '16px'
-                                }}
-                            />
-                        </Flex>
+                        
+                        {
+                            !playlists[pageNumber]?.saved ? 
+                                <Flex
+                                    gap='8px'
+                                >
+                                    { languages[language]?.laboratory?.exportToSpotifyBtn }
+                                    <ExportOutlined
+                                        style={{
+                                            fontSize: '16px'
+                                        }}
+                                    />
+                                </Flex>
+                                : 
+                                <Flex
+                                    gap='8px'
+                                >
+                                    { languages[language]?.laboratory?.savedOnSpotifyBtn  }
+                                    <CheckOutlined
+                                        style={{
+                                            fontSize: '16px',
+                                            color: colors.success[800]
+                                        }}
+                                    />
+                                </Flex>
+                        }
+                        
                     </CustomButton>
                     <SpotifyFrame 
                         trackId={selectedTrackId}
                         visible={!!selectedTrackId}
                     />
+                    <Flex
+                        justify='center'
+                        gap='6px'
+                        style={{
+                            backgroundColor: 'transparent',
+                            alignSelf: 'center',
+                            padding: '4px 12px',
+                            borderRadius: '4px'
+                        }}
+                    >
+                        { playlists.map((_: any, index: number) => {
+                            return (
+                                <CustomButton
+                                    key={index}
+                                    defaultBgColor={ index == pageNumber ? colors.brand.dark : colors.brand.darkGrey }
+                                    hoverBgColor={colors.brand.dark}
+                                    onClick={() => setPageNumber(index)}
+                                    style={{
+                                        width: '8px',
+                                        height: '8px',
+                                        margin: '0px',
+                                        padding: '0px',
+                                        borderRadius: '50%',
+                                    }}
+                                />
+                            )
+                        })}
+                    </Flex>
                 </Flex>
             </Form>
         </Modal>

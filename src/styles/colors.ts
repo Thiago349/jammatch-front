@@ -49,6 +49,8 @@ export const colors = {
   },
   brand: {
     light: "#FBFBFA",
+    lightGrey: "#F0F0F0",
+    darkGrey: "#B4B4B4",
     dark: "#2C2C2C",
     jamPurple: "#73378C"
   },

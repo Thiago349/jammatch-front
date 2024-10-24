@@ -10,13 +10,15 @@ type CustomButtonProps = {
 	defaultBgColor?: string,
 	hoverColor?: string,
 	hoverBgColor?: string,
+	disabledColor?: string,
+	disabledBgColor?: string,
 	onClick?: any,
 	disabled?: boolean,
 	loading?: boolean,
 	onForm?: boolean
 }
 
-export const CustomButton = ({ style, children, icon, defaultColor, defaultBgColor, hoverColor, hoverBgColor, onClick=null, disabled=false, loading=false, onForm=false }: CustomButtonProps ) => {
+export const CustomButton = ({ style, children, icon, defaultColor, defaultBgColor, hoverColor, hoverBgColor, disabledColor, disabledBgColor, onClick=null, disabled=false, loading=false, onForm=false }: CustomButtonProps ) => {
 	return (
 		<ConfigProvider theme={{
 			components: {
@@ -30,7 +32,9 @@ export const CustomButton = ({ style, children, icon, defaultColor, defaultBgCol
 				defaultActiveBg: defaultBgColor ?? 'transparent',
 				defaultActiveBorderColor:  defaultBgColor ?? 'transparent',
 				defaultActiveColor:  defaultColor ?? colors.brand.light,
-				borderColorDisabled:  'transparent'
+				borderColorDisabled:  'transparent',
+				colorTextDisabled: disabledColor ?? 'inherit',
+				colorBgContainerDisabled: disabledBgColor ?? colors.brand.lightGrey,
 			  }
 			}
 		  }}>

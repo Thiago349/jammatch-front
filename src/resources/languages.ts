@@ -23,6 +23,7 @@ export const languages = {
             paramPlaylistView: "Parâmetros",
             playlistNamePlaceholder: "Digite um nome para sua playlist",
             exportToSpotifyBtn: "Salve no Spotify",
+            savedOnSpotifyBtn: "Playlist salva",
             params: {
                 genres: 'Gêneros',
                 danceability: "Dançabilidade",

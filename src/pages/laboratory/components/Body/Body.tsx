@@ -26,6 +26,7 @@ export const Body = ({
 	if (segmentedValue == 'random') content = <RandomContent 
 		setNewPlaylistModal={ setNewPlaylistModal }
 		setNewPlaylists={ setNewPlaylists }
+		playlists={ newPlaylists }
 	/>
 
 	return (

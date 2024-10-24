@@ -15,17 +15,20 @@ const { Title } = Typography
 export type TRandomContent = {
     setNewPlaylistModal: Dispatch<SetStateAction<boolean>>
     setNewPlaylists: Dispatch<SetStateAction<any>>
+    playlists: any
 }
 
-export const RandomContent = ({ setNewPlaylistModal, setNewPlaylists }: TRandomContent) => {
+export const RandomContent = ({ setNewPlaylistModal, setNewPlaylists, playlists }: TRandomContent) => {
 	const language = useAppSelector(state => state.language.name)
     const spotifyAuthorization = useAppSelector(state => state.spotifyAuthentication.status)
 
     const { mutate: mutateRandomPlaylist, isPending: isRandomPlaylistPending } = useMutation({
         mutationFn: postLabServiceRandom,
         onSuccess: (data) => {
+            const newPlaylistInstance = [...playlists]
+            newPlaylistInstance.push(data)
+            setNewPlaylists(newPlaylistInstance)
             setNewPlaylistModal(true)
-            setNewPlaylists([data])
         }
     })
 
