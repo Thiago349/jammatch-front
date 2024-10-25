@@ -2,28 +2,27 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAppSelector } from "src/redux/store"
 
+import { Modal, Flex, Form, Segmented } from 'antd'
+import type { FormProps } from 'antd'
 import { CheckOutlined, ExportOutlined } from '@ant-design/icons'
 
-import { Modal, Flex, Form, Input, Segmented, Button } from 'antd'
-import type { FormProps } from 'antd'
-
-import { Params, Playlist } from './components'
+import { colors } from 'src/styles/colors'
+import { languages } from "src/resources/languages"
 
 import { useUserData } from 'src/hooks'
 import { SpotifyFrame, CustomButton, EditableCell } from 'src/components'
 
-import { colors } from 'src/styles/colors'
-import { languages } from "src/resources/languages"
 import { PlaylistViewOptions } from '../../constants'
-
 import { postSpotifyPlaylist } from "src/services/api/endpoints";
-
+import { Params, Playlist } from './components'
 
 type NewPlaylistModalProps = {
     setModalStatus: Dispatch<SetStateAction<boolean>>
     modalStatus: boolean
     setNewPlaylists: Dispatch<SetStateAction<any>>
     playlists: any
+    setPageNumber: Dispatch<SetStateAction<number>>
+    pageNumber: number
 }
 
 const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
@@ -31,22 +30,21 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
     modalStatus,
     setNewPlaylists,
     playlists,
+    setPageNumber,
+    pageNumber
 }) => {
     const language = useAppSelector(state => state.language.name)
-    const [pageNumber, setPageNumber] = useState<number>(0)
     const [selectedTrackId, setSelectedTrackId] = useState<string>(null)
     const [segmentedValue, setSegmentedValue] = useState<string | number>('musics')
-    const { spotifySelf, isLoadingSpotifySelf } = useUserData()
+    const {spotifySelf, isLoadingSpotifySelf} = useUserData()
 
     const onFinish: FormProps['onFinish'] = async () => {
         setSelectedTrackId(null)
-        setPageNumber(0)
         setModalStatus(false)
     }
 
     const onCancel = () => {
         setSelectedTrackId(null)
-        setPageNumber(0)
         setModalStatus(false)
     }
 

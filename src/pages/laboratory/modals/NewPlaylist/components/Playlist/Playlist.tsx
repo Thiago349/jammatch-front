@@ -1,22 +1,18 @@
 import React, { SetStateAction, Dispatch, useContext, useMemo, act } from 'react'
-import { HolderOutlined } from '@ant-design/icons'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { DndContext } from '@dnd-kit/core'
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
-import {
-  arrayMove,
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable'
+import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+
 import { Flex, Typography, Button, Table } from 'antd'
 import type { TableColumnsType } from 'antd'
-import { SpotifyOutlined } from '@ant-design/icons'
+import { HolderOutlined, SpotifyOutlined } from '@ant-design/icons'
+
+import { colors } from 'src/styles/colors'
 
 import { CustomButton } from 'src/components'
-import { colors } from 'src/styles/colors'
 
 const { Title } = Typography
 

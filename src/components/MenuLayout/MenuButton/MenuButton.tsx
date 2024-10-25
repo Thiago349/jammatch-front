@@ -1,5 +1,4 @@
 import { Flex, Typography } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
 import { CustomButton } from 'src/components'
 
 import { colors } from 'src/styles/colors'

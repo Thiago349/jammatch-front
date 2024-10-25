@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from 'react'
-import { useAppSelector } from "src/redux/store";
-
 import { useMutation, useQueryClient  } from '@tanstack/react-query'
+import { useAppSelector } from "src/redux/store";
 
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-import { putProfilePhoto } from 'src/services/api/endpoints';
 import { languages } from 'src/resources/languages';
+
+import { putProfilePhoto } from 'src/services/api/endpoints';
 
 type ImageUploaderProps = {
   aspect: number

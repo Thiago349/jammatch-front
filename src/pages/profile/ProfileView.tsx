@@ -1,12 +1,13 @@
 import { useState } from "react"
 
 import { Card, Flex } from "antd"
-import { Avatar, Cover, Description, EditBannerBtn, Name } from "./components"
-import { EditProfileModal } from "./modals"
+
+import { colors } from "src/styles/colors"
 
 import { useUserData } from "src/hooks"
 
-import { colors } from "src/styles/colors"
+import { Avatar, Cover, Description, EditBannerBtn, Name } from "./components"
+import { EditProfileModal } from "./modals"
 
 export type TProfileView = {
 }
@@ -81,3 +82,5 @@ export const ProfileView = ({
     </ Flex>
   )
 }
+
+export default ProfileView

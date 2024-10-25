@@ -4,9 +4,10 @@ import { useAppSelector } from "src/redux/store";
 
 import { Flex, Typography } from "antd";
 
-import { CustomButton } from "src/components";
-import { languages } from 'src/resources/languages';
 import { colors } from "src/styles/colors";
+import { languages } from 'src/resources/languages';
+
+import { CustomButton } from "src/components";
 
 import { postLabServiceRandom } from "src/services/api/endpoints";
 
@@ -16,9 +17,15 @@ export type TRandomContent = {
     setNewPlaylistModal: Dispatch<SetStateAction<boolean>>
     setNewPlaylists: Dispatch<SetStateAction<any>>
     playlists: any
+    setPageNumber: Dispatch<SetStateAction<number>>
 }
 
-export const RandomContent = ({ setNewPlaylistModal, setNewPlaylists, playlists }: TRandomContent) => {
+export const RandomContent = ({ 
+    setNewPlaylistModal, 
+    setNewPlaylists, 
+    playlists,
+    setPageNumber,
+}: TRandomContent) => {
 	const language = useAppSelector(state => state.language.name)
     const spotifyAuthorization = useAppSelector(state => state.spotifyAuthentication.status)
 
@@ -28,6 +35,7 @@ export const RandomContent = ({ setNewPlaylistModal, setNewPlaylists, playlists 
             const newPlaylistInstance = [...playlists]
             newPlaylistInstance.push(data)
             setNewPlaylists(newPlaylistInstance)
+            setPageNumber(playlists.length)
             setNewPlaylistModal(true)
         }
     })

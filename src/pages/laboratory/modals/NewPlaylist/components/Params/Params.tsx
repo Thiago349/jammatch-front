@@ -1,13 +1,13 @@
 import { useState, Dispatch, SetStateAction } from "react"
 import { useAppSelector } from "src/redux/store"
 
-import { ThunderboltOutlined, FireOutlined, SoundOutlined, AudioMutedOutlined, HeartOutlined, MessageOutlined, ApiOutlined, SmileOutlined, AppstoreOutlined } from '@ant-design/icons'
 import { List, Tag, Typography, Select, Slider, Flex, SelectProps } from "antd"
-
-import { PlaylistGenresViewOptions } from "src/pages/laboratory/constants"
+import { ThunderboltOutlined, FireOutlined, SoundOutlined, AudioMutedOutlined, HeartOutlined, MessageOutlined, ApiOutlined, SmileOutlined, AppstoreOutlined } from '@ant-design/icons'
 
 import { colors } from "src/styles/colors"
 import { languages } from "src/resources/languages"
+
+import { PlaylistGenresViewOptions } from "src/pages/laboratory/constants"
 
 const { Title } = Typography
 

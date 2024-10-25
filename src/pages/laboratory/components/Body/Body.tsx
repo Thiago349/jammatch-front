@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useAppSelector } from "src/redux/store";
 
-import { Flex, Segmented, Typography } from "antd";
-
-import { languages } from 'src/resources/languages';
-import { MethodOptions } from '../../constants'
-import { RandomContent } from '..'
-import { NewPlaylistModal } from "../../modals";
+import { Badge, Flex, Segmented, Typography } from "antd";
+import { InboxOutlined } from '@ant-design/icons'
 
 import { colors } from "src/styles/colors";
+import { languages } from 'src/resources/languages';
+
+import { CustomButton } from "src/components";
+
+import { RandomContent } from '..'
+import { NewPlaylistModal } from "../../modals";
+import { MethodOptions } from '../../constants'
+
 
 const { Title } = Typography
 
@@ -21,12 +25,14 @@ export const Body = ({
 	const [newPlaylistModal, setNewPlaylistModal] = useState<boolean>(false)
 	const [newPlaylists, setNewPlaylists] = useState<any[]>([])
 	const [segmentedValue, setSegmentedValue] = useState<string | number>('random');
+    const [pageNumber, setPageNumber] = useState<number>(0)
 
 	let content = <></>
 	if (segmentedValue == 'random') content = <RandomContent 
-		setNewPlaylistModal={ setNewPlaylistModal }
-		setNewPlaylists={ setNewPlaylists }
-		playlists={ newPlaylists }
+		setNewPlaylistModal={setNewPlaylistModal}
+		setNewPlaylists={setNewPlaylists}
+		playlists={newPlaylists}
+		setPageNumber={setPageNumber}
 	/>
 
 	return (
@@ -37,14 +43,48 @@ export const Body = ({
 				gap: '16px'
 			}}
 		>
-			<Title
-				style={{ 
-					margin: '0px' 
+			<Flex
+				justify="space-between"
+				style={{
+					width: '100%'
 				}}
-				level={4}
 			>
-				{ languages[language]?.laboratory?.chooseMethodTitle }
-			</Title>
+				<Title
+					style={{ 
+						margin: '0px' 
+					}}
+					level={4}
+				>
+					{ languages[language]?.laboratory?.chooseMethodTitle }
+				</Title>
+				<Badge 
+					count={newPlaylists.length}
+					color={colors.brand.dark}
+					size="small"
+				>
+					<CustomButton
+						style={{
+							padding: '0px',
+							width: '32px',
+							height: '32px'
+						}}
+						defaultColor={colors.brand.dark}
+						defaultBgColor={colors.brand.light}
+						hoverColor={colors.brand.light}
+						hoverBgColor={colors.brand.jamPurple}
+						onClick={setNewPlaylistModal}
+					>
+						<InboxOutlined 
+							style={{
+								color: 'inherit',
+								fontSize: '24px',
+							}}
+							width='16px'
+							height='16px'
+						/>
+					</CustomButton>
+				</Badge>
+			</Flex>
 			<Segmented 
 				style={{
 					width: 'fit-content',
@@ -58,7 +98,8 @@ export const Body = ({
 					height: '100%',
 					border: `solid ${colors.primaryNeutral[200]} 2px`,
 					borderRadius: '8px'
-			}}>
+				}}
+			>
 				{content}
 			</Flex>
 			<NewPlaylistModal
@@ -66,6 +107,8 @@ export const Body = ({
 				modalStatus={newPlaylistModal}
 				setNewPlaylists={setNewPlaylists}
 				playlists={newPlaylists}
+				setPageNumber={setPageNumber}
+				pageNumber={pageNumber}
 			/>
 		</Flex>
 	)

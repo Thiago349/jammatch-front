@@ -1,9 +1,8 @@
-import { useState } from "react"
-
 import { Card, Flex } from "antd"
-import { Body } from "./components"
 
 import { colors } from "src/styles/colors"
+
+import { Body } from "./components"
 
 export type TLaboratoryView = {
 }
@@ -35,3 +34,5 @@ export const LaboratoryView = ({
     </ Flex>
   )
 }
+
+export default LaboratoryView

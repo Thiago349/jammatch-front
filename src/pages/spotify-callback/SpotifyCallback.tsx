@@ -9,7 +9,7 @@ import { getSpotifySelf, postSpotifyAuth, postSpotifyAttachment, getUserSelf } f
 
 import { useDispatch } from 'react-redux'
 
-const SpotifyCallbackContainer = () => {
+const SpotifyCallback = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
@@ -70,4 +70,4 @@ const SpotifyCallbackContainer = () => {
   )
 }
 
-export default SpotifyCallbackContainer
+export default SpotifyCallback
