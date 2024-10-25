@@ -38,11 +38,6 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
     const [segmentedValue, setSegmentedValue] = useState<string | number>('musics')
     const {spotifySelf, isLoadingSpotifySelf} = useUserData()
 
-    const onFinish: FormProps['onFinish'] = async () => {
-        setSelectedTrackId(null)
-        setModalStatus(false)
-    }
-
     const onCancel = () => {
         setSelectedTrackId(null)
         setModalStatus(false)
@@ -69,129 +64,125 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
             footer={false}
             onCancel={onCancel}
         >
-            <Form 
-                onFinish={onFinish}
+            <Flex
+                vertical 
+                justify='center' 
+                align='start'
+                gap='12px'
             >
-                <Flex
-                    vertical 
-                    justify='center' 
-                    align='start'
-                    gap='12px'
+                <EditableCell 
+                    handleValue={setName}
+                    value={playlists[pageNumber]?.name}
+                    placeholder={languages[language].laboratory.playlistNamePlaceholder}
+                />
+                <Segmented 
+                    style={{
+                        width: '100%',
+                    }}
+                    options={PlaylistViewOptions(language)}
+                    value={segmentedValue} 
+                    onChange={setSegmentedValue}
+                    block
+                />
+                <Flex 
+                    style={{
+                        width: '100%',
+                        height: 'fit-content'
+                    }}
                 >
-                    <EditableCell 
-                        handleValue={setName}
-                        value={playlists[pageNumber]?.name}
-                        placeholder={languages[language].laboratory.playlistNamePlaceholder}
-                    />
-                    <Segmented 
-                        style={{
-                            width: '100%',
-                        }}
-                        options={PlaylistViewOptions(language)}
-                        value={segmentedValue} 
-                        onChange={setSegmentedValue}
-                        block
-                    />
-                    <Flex 
-                        style={{
-                            width: '100%',
-                            height: 'fit-content'
-                        }}
-                    >
-                        { 
-                            segmentedValue == 'musics' ? 
-                            <Playlist
-                                setSelectedTrackId={setSelectedTrackId}
-                                selectedTrackId={selectedTrackId}
-                                setNewPlaylists={setNewPlaylists}
-                                playlists={playlists}
-                                pageNumber={pageNumber}
-                            /> :
-                            <Params 
-                                setNewPlaylists={setNewPlaylists}
-                                playlists={playlists}
-                                pageNumber={pageNumber}
-                            />
-                    }
-                    </Flex>
-                    <CustomButton
-                        style={{
-                            alignSelf: 'end'
-                        }}
-                        onClick={() => mutateNewSpotifyPlaylist({
-                            spotifyUserId: spotifySelf?.id,
-                            name: playlists[pageNumber]?.name,
-                            tracks: playlists[pageNumber]?.tracks.map(track => track?.id)
-                        })}
-                        disabled={!playlists[pageNumber]?.name || !!playlists[pageNumber]?.saved}
-                        loading={!!isNewSpotifyPlaylistPending}
-                        defaultBgColor={colors.brand.dark}
-                        defaultColor={colors.brand.light}
-                        hoverBgColor={colors.brand.jamPurple}
-                        disabledBgColor={!playlists[pageNumber]?.saved ? null : 'transparent'}
-                    >
-                        
-                        {
-                            !playlists[pageNumber]?.saved ? 
-                                <Flex
-                                    gap='8px'
-                                >
-                                    { languages[language]?.laboratory?.exportToSpotifyBtn }
-                                    <ExportOutlined
-                                        style={{
-                                            fontSize: '16px'
-                                        }}
-                                    />
-                                </Flex>
-                                : 
-                                <Flex
-                                    gap='8px'
-                                >
-                                    { languages[language]?.laboratory?.savedOnSpotifyBtn  }
-                                    <CheckOutlined
-                                        style={{
-                                            fontSize: '16px',
-                                            color: colors.success[800]
-                                        }}
-                                    />
-                                </Flex>
-                        }
-                        
-                    </CustomButton>
-                    <SpotifyFrame 
-                        trackId={selectedTrackId}
-                        visible={!!selectedTrackId}
-                    />
-                    <Flex
-                        justify='center'
-                        gap='6px'
-                        style={{
-                            backgroundColor: 'transparent',
-                            alignSelf: 'center',
-                            padding: '4px 12px',
-                            borderRadius: '4px'
-                        }}
-                    >
-                        { playlists.map((_: any, index: number) => {
-                            return (
-                                <CustomButton
-                                    key={index}
-                                    defaultBgColor={ index == pageNumber ? colors.brand.dark : colors.brand.darkGrey }
-                                    hoverBgColor={colors.brand.dark}
-                                    onClick={() => setPageNumber(index)}
+                    { 
+                        segmentedValue == 'musics' ? 
+                        <Playlist
+                            setSelectedTrackId={setSelectedTrackId}
+                            selectedTrackId={selectedTrackId}
+                            setNewPlaylists={setNewPlaylists}
+                            playlists={playlists}
+                            pageNumber={pageNumber}
+                        /> :
+                        <Params 
+                            setNewPlaylists={setNewPlaylists}
+                            playlists={playlists}
+                            pageNumber={pageNumber}
+                        />
+                }
+                </Flex>
+                <CustomButton
+                    style={{
+                        alignSelf: 'end'
+                    }}
+                    onClick={() => mutateNewSpotifyPlaylist({
+                        spotifyUserId: spotifySelf?.id,
+                        name: playlists[pageNumber]?.name,
+                        tracks: playlists[pageNumber]?.tracks.map(track => track?.id)
+                    })}
+                    disabled={!playlists[pageNumber]?.name || !!playlists[pageNumber]?.saved}
+                    loading={!!isNewSpotifyPlaylistPending}
+                    defaultBgColor={colors.brand.dark}
+                    defaultColor={colors.brand.light}
+                    hoverBgColor={colors.brand.jamPurple}
+                    disabledBgColor={!playlists[pageNumber]?.saved ? null : 'transparent'}
+                >
+                    
+                    {
+                        !playlists[pageNumber]?.saved ? 
+                            <Flex
+                                gap='8px'
+                            >
+                                { languages[language]?.laboratory?.exportToSpotifyBtn }
+                                <ExportOutlined
                                     style={{
-                                        width: '8px',
-                                        height: '8px',
-                                        margin: '0px',
-                                        padding: '0px',
-                                        borderRadius: '50%',
+                                        fontSize: '16px'
                                     }}
                                 />
-                            )
-                        })}
-                    </Flex>
+                            </Flex>
+                            : 
+                            <Flex
+                                gap='8px'
+                            >
+                                { languages[language]?.laboratory?.savedOnSpotifyBtn  }
+                                <CheckOutlined
+                                    style={{
+                                        fontSize: '16px',
+                                        color: colors.success[800]
+                                    }}
+                                />
+                            </Flex>
+                    }
+                    
+                </CustomButton>
+                <SpotifyFrame 
+                    trackId={selectedTrackId}
+                    visible={!!selectedTrackId}
+                />
+                <Flex
+                    justify='center'
+                    gap='6px'
+                    style={{
+                        backgroundColor: 'transparent',
+                        alignSelf: 'center',
+                        padding: '4px 12px',
+                        borderRadius: '4px'
+                    }}
+                >
+                    { playlists.map((_: any, index: number) => {
+                        return (
+                            <CustomButton
+                                key={index}
+                                defaultBgColor={ index == pageNumber ? colors.brand.dark : colors.brand.darkGrey }
+                                hoverBgColor={colors.brand.dark}
+                                onClick={() => setPageNumber(index)}
+                                style={{
+                                    width: '8px',
+                                    height: '8px',
+                                    margin: '0px',
+                                    padding: '0px',
+                                    borderRadius: '50%',
+                                }}
+                            />
+                        )
+                    })}
                 </Flex>
-            </Form>
+            </Flex>
         </Modal>
     )
 }
