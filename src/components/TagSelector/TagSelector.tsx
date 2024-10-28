@@ -17,7 +17,7 @@ import { languages } from "src/resources/languages";
 const { Title } = Typography
 
 type TagModalProps = {
-    setModalStatus: Dispatch<SetStateAction<boolean>>
+    setModal: Dispatch<SetStateAction<boolean>>
     modalStatus: boolean
     isLoadingProfile: boolean
     profileId: string
@@ -26,7 +26,7 @@ type TagModalProps = {
 }
 
 const TagModal: React.FC<TagModalProps> = ({
-    setModalStatus,
+    setModal,
     modalStatus,
     isLoadingProfile,
     profileId,
@@ -64,7 +64,7 @@ const TagModal: React.FC<TagModalProps> = ({
 
     const onCancel = () => {
         setSelectedTagId(null)
-        setModalStatus(false)
+        setModal(false)
     }
 
     const roleSelectedOptions = {}

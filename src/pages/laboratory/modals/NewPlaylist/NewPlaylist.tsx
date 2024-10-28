@@ -17,7 +17,7 @@ import { postSpotifyPlaylist } from "src/services/api/endpoints";
 import { Params, Playlist } from './components'
 
 type NewPlaylistModalProps = {
-    setModalStatus: Dispatch<SetStateAction<boolean>>
+    setModal: Dispatch<SetStateAction<boolean>>
     modalStatus: boolean
     setNewPlaylists: Dispatch<SetStateAction<any>>
     playlists: any
@@ -26,7 +26,7 @@ type NewPlaylistModalProps = {
 }
 
 const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
-    setModalStatus,
+    setModal,
     modalStatus,
     setNewPlaylists,
     playlists,
@@ -40,7 +40,7 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
 
     const onCancel = () => {
         setSelectedTrackId(null)
-        setModalStatus(false)
+        setModal(false)
     }
 
     const setName = (name: string) => {
@@ -63,6 +63,7 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
             open={modalStatus}
             footer={false}
             onCancel={onCancel}
+            zIndex={1000}
         >
             <Flex
                 vertical 

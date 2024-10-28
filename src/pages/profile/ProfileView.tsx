@@ -73,7 +73,7 @@ export const ProfileView = ({
       {
         userSelf?.profile ?
         <EditProfileModal 
-          setModalStatus={setEditProfileModal}
+          setModal={setEditProfileModal}
           modalStatus={editProfileModal}
           profile={userSelf?.profile}
         /> :

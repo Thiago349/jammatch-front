@@ -102,7 +102,7 @@ export const Name = ({
 				}}/>
 			</CustomButton>
 			<TagSelector 
-				setModalStatus={setTagSelectorModal}
+				setModal={setTagSelectorModal}
 				modalStatus={tagSelectorModal}
 				isLoadingProfile={isLoadingProfile}
 				profileId={profile?.id}

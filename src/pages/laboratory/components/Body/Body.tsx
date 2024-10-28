@@ -9,7 +9,7 @@ import { languages } from 'src/resources/languages';
 
 import { CustomButton } from "src/components";
 
-import { RandomContent } from '..'
+import { RandomContent, PlaylistDrawer } from '..'
 import { NewPlaylistModal } from "../../modals";
 import { MethodOptions } from '../../constants'
 
@@ -23,9 +23,11 @@ export const Body = ({
 }: BodyProps ) => {
 	const language = useAppSelector(state => state.language.name)
 	const [newPlaylistModal, setNewPlaylistModal] = useState<boolean>(false)
+	const [newPlaylistDrawer, setNewPlaylistDrawer] = useState<boolean>(false);
 	const [newPlaylists, setNewPlaylists] = useState<any[]>([])
 	const [segmentedValue, setSegmentedValue] = useState<string | number>('random');
     const [pageNumber, setPageNumber] = useState<number>(0)
+
 
 	let content = <></>
 	if (segmentedValue == 'random') content = <RandomContent 
@@ -72,7 +74,8 @@ export const Body = ({
 						defaultBgColor={colors.brand.light}
 						hoverColor={colors.brand.light}
 						hoverBgColor={colors.brand.jamPurple}
-						onClick={setNewPlaylistModal}
+						onClick={setNewPlaylistDrawer}
+						disabled={newPlaylists.length == 0}
 					>
 						<InboxOutlined 
 							style={{
@@ -103,13 +106,24 @@ export const Body = ({
 				{content}
 			</Flex>
 			<NewPlaylistModal
-				setModalStatus={setNewPlaylistModal}
+				setModal={setNewPlaylistModal}
 				modalStatus={newPlaylistModal}
 				setNewPlaylists={setNewPlaylists}
 				playlists={newPlaylists}
 				setPageNumber={setPageNumber}
 				pageNumber={pageNumber}
 			/>
+			<PlaylistDrawer
+				setDrawer={setNewPlaylistDrawer}
+				drawerStatus={newPlaylistDrawer}
+				setNewPlaylists={setNewPlaylists}
+				playlists={newPlaylists}
+				setNewPlaylistModal={setNewPlaylistModal}
+				setPageNumber={setPageNumber}
+				pageNumber={pageNumber}
+			>
+
+			</PlaylistDrawer>
 		</Flex>
 	)
 };

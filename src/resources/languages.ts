@@ -9,6 +9,8 @@ export const languages = {
         nameInput: "Nome",
         passwordInput: "Senha",
         descriptionInput: "Descrição",
+        musicLabel: "Música",
+        musicsLabel: "Músicas",
         profile: {
             editModalTitle: "Edite seu perfil:",
             editRoleTitle: "Edite suas funções:",
@@ -24,6 +26,7 @@ export const languages = {
             playlistNamePlaceholder: "Digite um nome para sua playlist",
             exportToSpotifyBtn: "Salve no Spotify",
             savedOnSpotifyBtn: "Playlist salva",
+            emptyPlaylistTitle: "Nenhuma playlist criada.",
             params: {
                 genres: 'Gêneros',
                 danceability: "Dançabilidade",

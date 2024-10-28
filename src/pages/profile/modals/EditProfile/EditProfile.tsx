@@ -13,7 +13,7 @@ import { languages } from "src/resources/languages";
 const { Title } = Typography
 
 type EditProfileModalProps = {
-    setModalStatus: Dispatch<SetStateAction<boolean>>
+    setModal: Dispatch<SetStateAction<boolean>>
     modalStatus: boolean
     profile: {
         id: string,
@@ -23,7 +23,7 @@ type EditProfileModalProps = {
 }
 
 const EditProfileModal: React.FC<EditProfileModalProps> = ({
-    setModalStatus,
+    setModal,
     modalStatus,
     profile
 }) => {
@@ -41,12 +41,12 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         await mutateAsync({ body: { name, description }, profileId: profile.id })
         queryClient.invalidateQueries({ queryKey: ['getUserSelf'] })
         setDescription(profile.description)
-        setModalStatus(false)
+        setModal(false)
     };
 
     const onCancel = () => {
         setDescription(profile.description)
-        setModalStatus(false)
+        setModal(false)
     }
 
     return (
