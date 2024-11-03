@@ -1,87 +1,100 @@
 import { useState, Dispatch, SetStateAction } from "react"
 import { useAppSelector } from "src/redux/store"
 
-import { List, Tag, Typography, Select, Slider, Flex, SelectProps } from "antd"
-import { ThunderboltOutlined, FireOutlined, SoundOutlined, AudioMutedOutlined, HeartOutlined, MessageOutlined, ApiOutlined, SmileOutlined, AppstoreOutlined } from '@ant-design/icons'
+import { List, Tag, Typography, Slider, Flex } from "antd"
+import { ThunderboltOutlined, FireOutlined, SoundOutlined, AudioMutedOutlined, StarOutlined, ApiOutlined, SmileOutlined, AppstoreOutlined } from '@ant-design/icons'
 
 import { colors } from "src/styles/colors"
 import { languages } from "src/resources/languages"
 
-import { PlaylistGenresViewOptions } from "src/pages/laboratory/constants"
+import { genreColors } from "src/pages/laboratory/constants"
 
 const { Title } = Typography
 
 type ParamsModalProps = {
-    setNewPlaylists: Dispatch<SetStateAction<any>>
     playlists: any
     pageNumber: number
 }
 
 const Params: React.FC<ParamsModalProps> = ({
-    setNewPlaylists,
     playlists,
     pageNumber
 }) => {
     const language = useAppSelector(state => state.language.name)
     const parameters = playlists[pageNumber].parameters
 
-    const musicParametersColors = {
-        genres: "#007BFF",
-        danceability: "#FF5733",
-        energy: "#FFC300",
-        acousticness: "#28A745",
-        instrumentalness: "#6C757D",
-        loudness: "#FFA500",
-        happiness: "#FFD700"
-    }
-
-    const musicParametersIcons = {
-        genres: <AppstoreOutlined style={{ fontSize: '16px', color: musicParametersColors.genres }} />,
-        danceability: <FireOutlined style={{ fontSize: '16px', color: musicParametersColors.danceability }} />,
-        energy: <ThunderboltOutlined style={{ fontSize: '16px', color: musicParametersColors.energy }} />,
-        acousticness: <ApiOutlined style={{ fontSize: '16px', color: musicParametersColors.acousticness }} />,
-        instrumentalness: <AudioMutedOutlined style={{ fontSize: '16px', color: musicParametersColors.instrumentalness }} />,
-        loudness: <SoundOutlined style={{ fontSize: '16px', color: musicParametersColors.loudness }} />,
-        happiness: <SmileOutlined style={{ fontSize: '16px', color: musicParametersColors.happiness }} />
-    }
-
-    const data = Object.keys(parameters).map((key) => ({
-        title: languages[language]?.laboratory?.params[key],
-        icon: musicParametersIcons[key as keyof typeof musicParametersIcons],
-        value: key == 'loudness' ? ((parameters[key as keyof typeof parameters] + 60) / 60) : parameters[key as keyof typeof parameters],
-        color: musicParametersColors[key as keyof typeof musicParametersColors]
-    }))
-
-    type TagRender = SelectProps['tagRender'];
-
-    const tagRender: TagRender = (props) => {
-        const { label, value } = props;
-        const option = PlaylistGenresViewOptions(language).find(opt => opt.value === value);
-        const color = option?.color || 'default';
-
-        const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
-            event.preventDefault();
-            event.stopPropagation();
-        };
-
-        return (
-            <Tag
-                color={color}
-                onMouseDown={onPreventMouseDown}
-                style={{ marginInlineEnd: 4 }}
-            >
-                {label}
-            </Tag>
-        );
-    };
+    const musicParameters = [
+        { 
+            icon: <AppstoreOutlined style={{ fontSize: '16px', color: "#007BFF" }} />,
+            color: "#007BFF",
+            value: parameters.genres,
+            title: languages[language]?.laboratory?.params.genres
+        },
+        { 
+            icon: <FireOutlined style={{ fontSize: '16px', color: "#FF5733" }} />,
+            color: "#FF5733",
+            value: parameters.danceability,
+            title: languages[language]?.laboratory?.params.danceability,
+            min: 0,
+            max: 1
+        },
+        { 
+            icon: <ThunderboltOutlined style={{ fontSize: '16px', color: "#FFA500" }} />,
+            color: "#FFA500",
+            value: parameters.energy,
+            title: languages[language]?.laboratory?.params.energy,
+            min: 0,
+            max: 1
+        },
+        { 
+            icon: <ApiOutlined style={{ fontSize: '16px', color: "#28A745" }} />,
+            color: "#28A745",
+            value: parameters.acousticness,
+            title: languages[language]?.laboratory?.params.acousticness,
+            min: 0,
+            max: 1
+        },
+        { 
+            icon: <StarOutlined style={{ fontSize: '16px', color: "#FFD700" }} />,
+            color: "#FFD700",
+            value: parameters?.popularity,
+            title: languages[language]?.laboratory?.params?.popularity,
+            min: 0,
+            max: 100
+        },
+        { 
+            icon: <AudioMutedOutlined style={{ fontSize: '16px', color: "#6C757D" }} />,
+            color: "#6C757D",
+            value: parameters.instrumentalness,
+            title: languages[language]?.laboratory?.params.instrumentalness,
+            min: 0,
+            max: 1
+        },
+        { 
+            icon: <SoundOutlined style={{ fontSize: '16px', color: "#FF5733" }} />,
+            color: "#FF5733",
+            value: parameters.loudness,
+            title: languages[language]?.laboratory?.params.loudness,
+            min: -60,
+            max: 0
+        },
+        { 
+            icon: <SmileOutlined style={{ fontSize: '16px', color: "#FFD700" }} />,
+            color: "#FFD700",
+            value: parameters.happiness,
+            title: languages[language]?.laboratory?.params.happiness,
+            min: 0,
+            max: 1
+        }
+    ]
 
     return (
         <List
-            dataSource={data}
+            dataSource={musicParameters}
             renderItem={(item) => (
                 <List.Item
                     style={{
-                        height: 396 / 7,
+                        height: 396 / 8,
                         padding: '0px 16px'
                     }}
                 >
@@ -109,28 +122,36 @@ const Params: React.FC<ParamsModalProps> = ({
                         {
                             typeof item.value === 'number' ? 
                             <Slider
-                                value={item.value * 100}
+                                value={item.value}
                                 style={{ 
                                     width: '60%', 
                                     margin: '0px'  
                                 }}
+                                step={(item.max - item.min) / 100}
+                                min={item.min}
+                                max={item.max}
                                 styles={{
                                     track: {
                                         backgroundColor: item.color
                                     }
                                 }}
-                            /> : 
-                            <Select
-                                value={item.value.split([','])}
-                                mode="multiple"
-                                tagRender={(tagRender)}
-                                maxTagCount='responsive'
-                                allowClear
+                            /> :
+                            <Flex
                                 style={{ 
-                                    width: '60%' 
+                                    width: '60%', 
+                                    margin: '0px'  
                                 }}
-                                options={PlaylistGenresViewOptions(language)}
-                            />
+                            >
+                            {
+                                item.value?.map(genre => 
+                                    <Tag
+                                        color={genreColors[genre]}
+                                    >
+                                        {languages[language].genres[genre]}
+                                    </Tag>
+                                )
+                            } 
+                            </Flex>                           
                         }
                     </Flex>
                 </List.Item>

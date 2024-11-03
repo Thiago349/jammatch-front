@@ -19,3 +19,15 @@ export const postLabServiceRandom = async () => {
 
   return data;
 };
+
+
+export const postLabServiceCustom = async (params: any) => {
+  const spotifyToken = await getSpotifyAuth()
+
+  const token = getAuth().token
+  const { data } = await api.post(`v1/lab-services/custom`, { spotifyToken, params }, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return data;
+};

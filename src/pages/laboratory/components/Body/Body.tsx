@@ -9,7 +9,7 @@ import { languages } from 'src/resources/languages';
 
 import { CustomButton } from "src/components";
 
-import { RandomContent, PlaylistDrawer } from '..'
+import { RandomContent, CustomContent, PlaylistDrawer } from '..'
 import { NewPlaylistModal } from "../../modals";
 import { MethodOptions } from '../../constants'
 
@@ -36,7 +36,12 @@ export const Body = ({
 		playlists={newPlaylists}
 		setPageNumber={setPageNumber}
 	/>
-
+	else if (segmentedValue == 'custom') content = <CustomContent 
+		setNewPlaylistModal={setNewPlaylistModal}
+		setNewPlaylists={setNewPlaylists}
+		playlists={newPlaylists}
+		setPageNumber={setPageNumber}
+	/>
 	return (
 		<Flex vertical
 			style={{
@@ -121,9 +126,7 @@ export const Body = ({
 				setNewPlaylistModal={setNewPlaylistModal}
 				setPageNumber={setPageNumber}
 				pageNumber={pageNumber}
-			>
-
-			</PlaylistDrawer>
+			/>
 		</Flex>
 	)
 };

@@ -101,7 +101,6 @@ const NewPlaylistModal: React.FC<NewPlaylistModalProps> = ({
                             pageNumber={pageNumber}
                         /> :
                         <Params 
-                            setNewPlaylists={setNewPlaylists}
                             playlists={playlists}
                             pageNumber={pageNumber}
                         />
