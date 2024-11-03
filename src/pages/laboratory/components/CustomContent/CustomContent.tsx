@@ -243,6 +243,7 @@ const Params: React.FC<ParamsModalProps> = ({
                         "danceability": selectedDanceability,
                         "energy": selectedEnergy,
                         "acousticness": selectedAcousticness,
+                        "popularity": selectedPopularity,
                         "instrumentalness": selectedInstrumentalness,
                         "loudness": selectedLoudness,
                         "happiness": selectedHappiness
