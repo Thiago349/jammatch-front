@@ -38,7 +38,6 @@ const Params: React.FC<ParamsModalProps> = ({
     const [selectedAcousticness, setSelectedAcousticness] = useState<number>(0)
     const [selectedPopularity, setSelectedPopularity] = useState<number>(0)
     const [selectedInstrumentalness, setSelectedInstrumentalness] = useState<number>(0)
-    const [selectedLoudness, setSelectedLoudness] = useState<number>(-60)
     const [selectedHappiness, setSelectedHappiness] = useState<number>(0)
 
     const { mutate: mutateCustomPlaylist, isPending: isCustomPlaylistPending } = useMutation({
@@ -113,15 +112,6 @@ const Params: React.FC<ParamsModalProps> = ({
             title: languages[language]?.laboratory?.params.instrumentalness,
             min: 0,
             max: 1
-        },
-        { 
-            icon: <SoundOutlined style={{ fontSize: '16px', color: "#FF5733" }} />,
-            color: "#FF5733",
-            value: selectedLoudness,
-            onChange: setSelectedLoudness,
-            title: languages[language]?.laboratory?.params.loudness,
-            min: -60,
-            max: 0
         },
         { 
             icon: <SmileOutlined style={{ fontSize: '16px', color: "#FFD700" }} />,
@@ -245,7 +235,6 @@ const Params: React.FC<ParamsModalProps> = ({
                         "acousticness": selectedAcousticness,
                         "popularity": selectedPopularity,
                         "instrumentalness": selectedInstrumentalness,
-                        "loudness": selectedLoudness,
                         "happiness": selectedHappiness
                     }
                     mutateCustomPlaylist(params)

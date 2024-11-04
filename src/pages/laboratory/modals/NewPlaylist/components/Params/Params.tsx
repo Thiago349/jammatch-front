@@ -71,14 +71,6 @@ const Params: React.FC<ParamsModalProps> = ({
             max: 1
         },
         { 
-            icon: <SoundOutlined style={{ fontSize: '16px', color: "#FF5733" }} />,
-            color: "#FF5733",
-            value: parameters.loudness,
-            title: languages[language]?.laboratory?.params.loudness,
-            min: -60,
-            max: 0
-        },
-        { 
             icon: <SmileOutlined style={{ fontSize: '16px', color: "#FFD700" }} />,
             color: "#FFD700",
             value: parameters.happiness,
@@ -94,7 +86,7 @@ const Params: React.FC<ParamsModalProps> = ({
             renderItem={(item) => (
                 <List.Item
                     style={{
-                        height: 396 / 8,
+                        height: 396 / 7,
                         padding: '0px 16px'
                     }}
                 >

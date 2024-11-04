@@ -34,7 +34,6 @@ export const languages = {
                 energy: "Energia",
                 acousticness: "Acusticidade",
                 instrumentalness: "Instrumentalidade",
-                loudness: "Volume",
                 happiness: "Felicidade",
                 popularity: "Popularidade"
             }
