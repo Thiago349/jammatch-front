@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch, unauthorize, spotifyUnauthorize, persistor  } from "src/redux/store"
 
+import { Skeleton } from "@mui/material"
 import { Dropdown, Layout, Flex, Typography } from 'antd'
 import type { MenuProps } from 'antd';
 import { UserOutlined } from '@ant-design/icons'
@@ -103,6 +104,17 @@ export const MenuHeader = () => {
 						cursor: 'grab'
 					}}>
 						{
+							isLoadingUserSelf ?
+							<Skeleton 
+								variant="circular" 
+								height={160}
+								style={{
+									width: '32px',
+									height: '32px',
+									margin: '0px 10px',
+									borderRadius: '50%',
+									backgroundColor: colors.brand.darkGrey
+							}} /> :
 							userSelf?.profile?.hasPhoto ?
 							<img 
 								style={{
@@ -137,24 +149,35 @@ export const MenuHeader = () => {
 							overflow: 'hidden',
 							whiteSpace: 'nowrap',
 						}}>
-							<Title style={{
-								color: colors.brand.light,
-								margin: 0,
-								fontSize: '16px',
-								textOverflow: 'ellipsis'
-							}}
-							>
-								{userSelf?.profile?.name}
-							</Title>
-							<Title style={{
-								color: colors.primaryNeutral[500],
-								margin: 0,
-								fontSize: '12px',
-								textOverflow: 'ellipsis'
-							}}
-							>
-								{userSelf?.username}
-							</Title>
+							{
+								isLoadingUserSelf ?
+								<>
+									<Skeleton variant="rounded" height={16} width="115px" style={{ margin: '4px 0px', backgroundColor: colors.brand.darkGrey }} />
+									<Skeleton variant="rounded" height={12} width="90px" style={{ margin: '4px 0px', backgroundColor: colors.brand.darkGrey }} />
+								</> :
+								<>
+									<Title style={{
+										color: colors.brand.light,
+										margin: 0,
+										fontSize: '16px',
+										textOverflow: 'ellipsis',
+										height: '20px'
+									}}
+								>
+									{userSelf?.profile?.name}
+									</Title>
+									<Title style={{
+										color: colors.primaryNeutral[500],
+										margin: 0,
+										fontSize: '12px',
+										textOverflow: 'ellipsis',
+										height: '16px'
+									}}
+									>
+										{userSelf?.username}
+									</Title>
+								</> 
+							}
 						</Flex>
 						<CaretDownFilled 
 							style={{
