@@ -2,7 +2,7 @@ import { useState, Dispatch, SetStateAction } from "react"
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useAppSelector } from "src/redux/store"
 
-import { List, Tag, Typography, Select, Slider, Flex, SelectProps } from "antd"
+import { Checkbox, List, Tag, Typography, Select, Slider, Flex, SelectProps } from "antd"
 import { ThunderboltOutlined, FireOutlined, SoundOutlined, StarOutlined, AudioMutedOutlined, ApiOutlined, SmileOutlined, AppstoreOutlined } from '@ant-design/icons'
 
 import { getRoles } from 'src/services/api/endpoints';
@@ -39,6 +39,13 @@ const Params: React.FC<ParamsModalProps> = ({
     const [selectedPopularity, setSelectedPopularity] = useState<number>(0)
     const [selectedInstrumentalness, setSelectedInstrumentalness] = useState<number>(0)
     const [selectedHappiness, setSelectedHappiness] = useState<number>(0)
+    const [enabledDanceability, setEnabledDanceability] = useState<boolean>(true)
+    const [enabledEnergy, setEnabledEnergy] = useState<boolean>(true)
+    const [enabledAcousticness, setEnabledAcousticness] = useState<boolean>(true)
+    const [enabledPopularity, setEnabledPopularity] = useState<boolean>(true)
+    const [enabledInstrumentalness, setEnabledInstrumentalness] = useState<boolean>(true)
+    const [enabledHappiness, setEnabledHappiness] = useState<boolean>(true)
+
 
     const { mutate: mutateCustomPlaylist, isPending: isCustomPlaylistPending } = useMutation({
         mutationFn: postLabServiceCustom,
@@ -73,6 +80,8 @@ const Params: React.FC<ParamsModalProps> = ({
             color: "#FF5733",
             value: selectedDanceability,
             onChange: setSelectedDanceability,
+            enabled: enabledDanceability,
+            onChangeEnabled: setEnabledDanceability,
             title: languages[language]?.laboratory?.params.danceability,
             min: 0,
             max: 1
@@ -82,6 +91,8 @@ const Params: React.FC<ParamsModalProps> = ({
             color: "#FFA500",
             value: selectedEnergy,
             onChange: setSelectedEnergy,
+            enabled: enabledEnergy,
+            onChangeEnabled: setEnabledEnergy,
             title: languages[language]?.laboratory?.params.energy,
             min: 0,
             max: 1
@@ -91,6 +102,8 @@ const Params: React.FC<ParamsModalProps> = ({
             color: "#28A745",
             value: selectedAcousticness,
             onChange: setSelectedAcousticness,
+            enabled: enabledAcousticness,
+            onChangeEnabled: setEnabledAcousticness,
             title: languages[language]?.laboratory?.params.acousticness,
             min: 0,
             max: 1
@@ -100,6 +113,8 @@ const Params: React.FC<ParamsModalProps> = ({
             color: "#FFD700",
             value: selectedPopularity,
             onChange: setSelectedPopularity,
+            enabled: enabledPopularity,
+            onChangeEnabled: setEnabledPopularity,
             title: languages[language]?.laboratory?.params.popularity,
             min: 0,
             max: 100
@@ -109,6 +124,8 @@ const Params: React.FC<ParamsModalProps> = ({
             color: "#6C757D",
             value: selectedInstrumentalness,
             onChange: setSelectedInstrumentalness,
+            enabled: enabledInstrumentalness,
+            onChangeEnabled: setEnabledInstrumentalness,
             title: languages[language]?.laboratory?.params.instrumentalness,
             min: 0,
             max: 1
@@ -118,6 +135,8 @@ const Params: React.FC<ParamsModalProps> = ({
             color: "#FFD700",
             value: selectedHappiness,
             onChange: setSelectedHappiness,
+            enabled: enabledHappiness,
+            onChangeEnabled: setEnabledHappiness,
             title: languages[language]?.laboratory?.params.happiness,
             min: 0,
             max: 1
@@ -187,22 +206,36 @@ const Params: React.FC<ParamsModalProps> = ({
                             </Flex>
                             {
                                 typeof item.value === 'number' ? 
-                                <Slider
-                                    value={item.value}
+                                <Flex
                                     style={{ 
                                         width: '60%', 
                                         margin: '0px'  
                                     }}
-                                    step={(item.max - item.min) / 100}
-                                    min={item.min}
-                                    max={item.max}
-                                    onChange={(value: any) => item.onChange(value)}
-                                    styles={{
-                                        track: {
-                                            backgroundColor: item.color
-                                        }
-                                    }}
-                                /> : 
+                                    align="center"
+                                    gap={16}
+                                >
+                                    <Slider
+                                        value={item.value}
+                                        style={{ 
+                                            width: '100%', 
+                                            margin: '0px'  
+                                        }}
+                                        step={(item.max - item.min) / 100}
+                                        min={item.min}
+                                        max={item.max}
+                                        onChange={(value: any) => item.onChange(value)}
+                                        disabled={!item.enabled}
+                                        styles={{
+                                            track: {
+                                                backgroundColor: item.color
+                                            }
+                                        }}
+                                    />
+                                    <Checkbox 
+                                        checked={item.enabled} 
+                                        onChange={() => item.onChangeEnabled(!item.enabled)}
+                                    />
+                                </Flex> : 
                                 <Select
                                     mode="multiple"
                                     value={item.value}
@@ -230,12 +263,12 @@ const Params: React.FC<ParamsModalProps> = ({
                 onClick={() => {
                     const params = { 
                         "genres": selectedGenres,
-                        "danceability": selectedDanceability,
-                        "energy": selectedEnergy,
-                        "acousticness": selectedAcousticness,
-                        "popularity": selectedPopularity,
-                        "instrumentalness": selectedInstrumentalness,
-                        "happiness": selectedHappiness
+                        "danceability": enabledDanceability ? selectedDanceability : undefined,
+                        "energy": enabledEnergy ? selectedEnergy : undefined,
+                        "acousticness": enabledAcousticness ? selectedAcousticness : undefined,
+                        "popularity": enabledPopularity ? selectedPopularity : undefined,
+                        "instrumentalness": enabledInstrumentalness ? selectedInstrumentalness : undefined,
+                        "happiness": enabledHappiness ? selectedHappiness : undefined
                     }
                     mutateCustomPlaylist(params)
                 }}

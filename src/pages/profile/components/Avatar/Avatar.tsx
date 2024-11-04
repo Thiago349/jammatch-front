@@ -32,7 +32,6 @@ export const Avatar = ({
 				top: '-94.5px',
 				border: `${colors.brand.light} 3px solid`
 		}} /> :
-		<>
 		<div
 			style={{
 				borderRadius: '50%',
@@ -78,9 +77,7 @@ export const Avatar = ({
 					</Flex>
 				}
 			</ImageUploader>
-		</div>
-			
-		</>
+		</div>	
 	)
 }
 
